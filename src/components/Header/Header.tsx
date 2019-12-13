@@ -1,14 +1,13 @@
-import React, {Component}  from 'react';
+import React from 'react';
 import NavbarBrand  from 'react-bootstrap/NavbarBrand';
 import Navbar from 'react-bootstrap/Navbar';
 
-export default class Header extends Component {
-
-    render(){
-        return (
-            <Navbar bg="dark" variant="dark" expand="md">
-                <NavbarBrand href="/">Transport</NavbarBrand>
-            </Navbar>
-        );
-    }
+const Header: React.FC = () => {
+    return (
+        <Navbar bg="dark" variant="dark" expand="md">
+            <NavbarBrand href="/">Transport</NavbarBrand>
+        </Navbar>
+    );
 }
+
+export default Header;

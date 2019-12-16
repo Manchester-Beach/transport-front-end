@@ -1,0 +1,17 @@
+.platform {
+  color: blue;
+}
+
+.journey-card{
+  padding: 10px;
+  margin: 10px;
+  font-size: 18px;
+  border-right-color: red;
+  border-right-width: thick;
+  width: 40%;
+}
+
+.title-div{
+  justify-content: space-between;
+  display: flex;
+}

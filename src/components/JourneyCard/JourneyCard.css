@@ -4,11 +4,13 @@
 
 .journey-card{
   padding: 10px;
-  margin: 10px;
-  font-size: 18px;
+  margin: 10px 40px 10px 40px;
   border-right-color: red;
   border-right-width: thick;
-  width: 40%;
+}
+
+.journey-card-div{
+  flex: 0 43%;
 }
 
 .title-div{

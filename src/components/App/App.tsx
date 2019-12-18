@@ -3,15 +3,18 @@ import Header from '../Header/Header';
 import JourneyCard from '../JourneyCard/JourneyCard';
 import JourneyCardList from '../JourneyCardList/JourneyCardList';
 import './App.css';
+import JourneyForm from '../JourneyForm/JourneyForm';
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <Header />
       <header className="App-header">
-
+        <Header />
       </header>
-      <JourneyCardList />
+      <div id="main">
+          <JourneyForm />
+      </div>
+      
     </div>
   );
 }

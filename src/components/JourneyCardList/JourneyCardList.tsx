@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import JourneyCard from '../JourneyCard/JourneyCard';
-import './JourneyCardList.css';
+import React, { useEffect, useState } from "react";
+import JourneyCard from "../JourneyCard/JourneyCard";
+import "./JourneyCardList.css";
 
 const API_URL = "http://localhost:8080/journeys";
 
 const JourneyCardList: React.FC = () => {
-
-  const[journeys, setJourneys] = useState<JourneyType[]>([]);
+  const [journeys, setJourneys] = useState<JourneyType[]>([]);
 
   useEffect(() => {
     fetchData();
@@ -36,12 +35,8 @@ const JourneyCardList: React.FC = () => {
     });
   }
 
-  return (
-    <div className="journey-list">
-      {displayJourneyCards()}
-    </div>
-  );
-}
+  return <div className="journey-list">{displayJourneyCards()}</div>;
+};
 
 class JourneyType {
   constructor(originStation: string, destinationStation: string, platform: string, scheduledDepartureTime: string, estimatedDepartureTime: string, arrivalTime: string){

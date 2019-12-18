@@ -1,15 +1,15 @@
-import React from 'react';
-import {Card} from 'react-bootstrap';
-import './JourneyCard.css';
+import React from "react";
+import { Card } from "react-bootstrap";
+import "./JourneyCard.css";
 
 type JourneyCardProps = {
-  origin?: String,
-  destination?: String,
-  platform?: String,
-  scheduledDepartureTime?: String,
-  estimatedDepartureTime?: String,
-  arrivalTime?: String
-}
+  origin?: String;
+  destination?: String;
+  platform?: String;
+  scheduledDepartureTime?: String;
+  estimatedDepartureTime?: String;
+  arrivalTime?: String;
+};
 
 function showDepartureTime(sched: undefined | String, est: undefined | String){
   console.log(sched, est);
@@ -36,6 +36,6 @@ const JourneyCard: React.FC<JourneyCardProps> = (props) => {
       </Card>
     </div>
   );
-}
+};
 
 export default JourneyCard;

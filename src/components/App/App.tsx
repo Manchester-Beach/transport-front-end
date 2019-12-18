@@ -1,19 +1,21 @@
-import React from 'react';
-import Header from '../Header/Header';
-import JourneyCard from '../JourneyCard/JourneyCard';
-import JourneyCardList from '../JourneyCardList/JourneyCardList';
-import './App.css';
+import React from "react";
+import Header from "../Header/Header";
+import JourneyCardList from "../JourneyCardList/JourneyCardList";
+import JourneyForm from "../JourneyForm/JourneyForm";
+import "./App.css";
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <Header />
       <header className="App-header">
-
+        <Header />
       </header>
-      <JourneyCardList />
+      <div id="main">
+        <JourneyForm />
+        <JourneyCardList />
+      </div>
     </div>
   );
-}
+};
 
 export default App;

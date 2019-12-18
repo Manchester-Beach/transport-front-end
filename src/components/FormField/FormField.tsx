@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { Station, StationOption } from "../../utils/Types";
 import AsyncSelect from "react-select/async";
 
@@ -14,12 +14,11 @@ type FormProps = {
 };
 
 class FormField extends Component<FormProps, FormState> {
-
   onStationSelected = (station: StationOption) => {
-      console.log("Station", station)
-      this.props.selectHandler(station.value);
-  }
-    
+    console.log("Station", station);
+    this.props.selectHandler(station.value);
+  };
+
   filterStations = (inputValue: string) => {
     return this.props.stations.filter((i: StationOption) =>
       i.value.name.toLowerCase().includes(inputValue.toLowerCase())

@@ -42,40 +42,40 @@ class JourneyForm extends Component<FormProps, FormState> {
 
   fromStationSelector = (station: Station) => {
     this.setState({
-        fromStation: station
+      fromStation: station
     });
-  }
+  };
 
   toStationSelector = (station: Station) => {
     this.setState({
-        toStation: station
+      toStation: station
     });
-  }
+  };
 
-  getStationOptions() : Array<StationOption> {
+  getStationOptions(): Array<StationOption> {
     var options: Array<StationOption> = [];
 
     for (let station of this.state.stationList) {
-        const stationOption: StationOption = {
-            label: station.name, 
-            value: station
-        };
+      const stationOption: StationOption = {
+        label: station.name,
+        value: station
+      };
 
-        options.push(stationOption);
+      options.push(stationOption);
     }
 
     return options;
   }
 
   addJourney = () => {
-      console.log("Button pressed")
-      if (this.state.fromStation && this.state.toStation) {
-          let originCrs = this.state.fromStation.crs;
-          let destinationCrs = this.state.toStation.crs;
+    console.log("Button pressed");
+    if (this.state.fromStation && this.state.toStation) {
+      let originCrs = this.state.fromStation.crs;
+      let destinationCrs = this.state.toStation.crs;
 
-          this.apiService.postJourney(originCrs, destinationCrs);
-      }
-  }
+      this.apiService.postJourney(originCrs, destinationCrs);
+    }
+  };
 
   render() {
     return (

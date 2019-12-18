@@ -1,9 +1,8 @@
-import React from 'react';
-import Header from '../Header/Header';
-import JourneyCard from '../JourneyCard/JourneyCard';
-import JourneyCardList from '../JourneyCardList/JourneyCardList';
-import './App.css';
-import JourneyForm from '../JourneyForm/JourneyForm';
+import React from "react";
+import Header from "../Header/Header";
+import JourneyCardList from "../JourneyCardList/JourneyCardList";
+import JourneyForm from "../JourneyForm/JourneyForm";
+import "./App.css";
 
 const App: React.FC = () => {
   return (
@@ -12,11 +11,11 @@ const App: React.FC = () => {
         <Header />
       </header>
       <div id="main">
-          <JourneyForm />
+        <JourneyForm />
+        <JourneyCardList />
       </div>
-      
     </div>
   );
-}
+};
 
 export default App;

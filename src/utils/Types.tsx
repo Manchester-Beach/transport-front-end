@@ -1,9 +1,9 @@
 export interface Station {
-    name: string,
-    crs: string
+  name: string;
+  crs: string;
 }
 
 export interface StationOption {
-    value: Station,
-    label: string
+  value: Station;
+  label: string;
 }

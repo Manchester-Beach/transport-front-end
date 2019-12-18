@@ -5,8 +5,15 @@
 .journey-card{
   padding: 10px;
   margin: 10px 40px 10px 40px;
-  border-right-color: red;
   border-right-width: thick;
+}
+
+.journey-on-time{
+  border-right-color: green;
+}
+
+.journey-late{
+  border-right-color: red;
 }
 
 .journey-card-div{

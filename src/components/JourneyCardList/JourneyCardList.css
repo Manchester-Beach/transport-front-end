@@ -1,6 +1,5 @@
 .journey-list{
   display: flex;
   flex-wrap: wrap;
-  background-color: #efefef;
   justify-content: space-around;
 }

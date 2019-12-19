@@ -3,9 +3,11 @@ import JourneyCard from "../JourneyCard/JourneyCard";
 import "./JourneyCardList.css";
 
 const API_URL = "http://localhost:8080/journeys";
+const API_SCHED_URL = "http://localhost:8080/scheduledJourneys/";
 
 const JourneyCardList: React.FC = () => {
   const [journeys, setJourneys] = useState<JourneyType[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -14,7 +16,7 @@ const JourneyCardList: React.FC = () => {
   function displayJourneyCards(){
     return (
       journeys.map((j, i) => {
-        return <JourneyCard key={i} origin={j.originStation} destination={j.destinationStation} platform={j.platform} scheduledDepartureTime={j.scheduledDepartureTime} estimatedDepartureTime={j.estimatedDepartureTime} arrivalTime={j.arrivalTime} />
+        return <JourneyCard key={i} origin={j.originStation} destination={j.destinationStation} platform={j.platform} scheduledDepartureTime={j.scheduledDepartureTime} estimatedDepartureTime={j.estimatedDepartureTime} arrivalTime={j.arrivalTime} cancelled={j.cancelled} />
       })
     );
   }
@@ -22,14 +24,22 @@ const JourneyCardList: React.FC = () => {
   async function fetchData() {
     const res = await fetch(API_URL).then(result => result.json()).then(result => {
       for(let i in result["journeys"]){
-        setJourneys(journeys => [...journeys, new JourneyType(
-          result["journeys"][i]["originStation"]["name"],
-          result["journeys"][i]["destinationStation"]["name"],
-          "4a",
-          "12:13",
-          "12:1" + (Math.floor(Math.random() * 2) + 3),
-          "13:00"
-        )]);
+        const schedRes = fetch(API_SCHED_URL + result["journeys"][i]["originStation"]["crs"] + "/" + result["journeys"][i]["destinationStation"]["crs"]).then(
+          response => response.json()
+        ).then(data =>
+
+          setJourneys(journeys => [...journeys, new JourneyType(
+            result["journeys"][i]["originStation"]["name"],
+            result["journeys"][i]["destinationStation"]["name"],
+            data["platform"],
+            data["scheduledDeparture"],
+            data["expectedDeparture"],
+            data["arrivalTime"],
+            data["cancelled"]
+          )])
+        );
+
+
       }
 
     });
@@ -39,13 +49,14 @@ const JourneyCardList: React.FC = () => {
 };
 
 class JourneyType {
-  constructor(originStation: string, destinationStation: string, platform: string, scheduledDepartureTime: string, estimatedDepartureTime: string, arrivalTime: string){
+  constructor(originStation: string, destinationStation: string, platform: string, scheduledDepartureTime: string, estimatedDepartureTime: string, arrivalTime: string, cancelled: boolean){
     this.originStation = originStation;
     this.destinationStation = destinationStation;
     this.platform = platform;
     this.scheduledDepartureTime = scheduledDepartureTime;
     this.estimatedDepartureTime = estimatedDepartureTime;
     this.arrivalTime = arrivalTime;
+    this.cancelled = cancelled;
     this.key = Math.random() * 10000000;
   }
   originStation: String;
@@ -55,6 +66,7 @@ class JourneyType {
   scheduledDepartureTime: String;
   estimatedDepartureTime: String;
   arrivalTime: String;
+  cancelled: Boolean;
 }
 
 export default JourneyCardList;

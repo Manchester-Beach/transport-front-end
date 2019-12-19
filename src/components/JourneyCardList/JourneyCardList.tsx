@@ -7,7 +7,6 @@ const API_SCHED_URL = "http://localhost:8080/scheduledJourneys/";
 
 const JourneyCardList: React.FC = () => {
   const [journeys, setJourneys] = useState<JourneyType[]>([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchData();

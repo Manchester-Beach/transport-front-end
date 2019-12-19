@@ -37,6 +37,6 @@
   }
 } */
 
-.App{
-  background-color: #efefef;
+html, body {
+  background-color: #fafafa
 }

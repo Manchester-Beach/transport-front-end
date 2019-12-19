@@ -29,7 +29,7 @@ class FormField extends Component<FormProps, FormState> {
     new Promise(resolve => {
       setTimeout(() => {
         resolve(this.filterStations(inputValue));
-      }, 1000);
+      }, 3000);
     });
 
   render() {

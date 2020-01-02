@@ -10,6 +10,7 @@ const JourneyCardList: React.FC = () => {
 
   useEffect(() => {
     fetchData();
+    setInterval(fetchData, 60000);
   }, []);
 
   function displayJourneyCards(){
@@ -21,10 +22,21 @@ const JourneyCardList: React.FC = () => {
   }
 
   async function fetchData() {
+    setJourneys([]);
     const res = await fetch(API_URL).then(result => result.json()).then(result => {
       for(let i in result["journeys"]){
         const schedRes = fetch(API_SCHED_URL + result["journeys"][i]["originStation"]["crs"] + "/" + result["journeys"][i]["destinationStation"]["crs"]).then(
-          response => response.json()
+          response => {
+            const status = response.status;
+            const data = response.json();
+
+            if(status != 200){
+              console.log("theres a problem");
+              console.log(data);
+            }
+            return JSON.stringify(data) == null ? null : data;
+
+          }
         ).then(data =>
 
           setJourneys(journeys => [...journeys, new JourneyType(
@@ -42,10 +54,13 @@ const JourneyCardList: React.FC = () => {
       }
 
     });
+
+    journeys.sort((a, b) => (new Date(a.scheduledDepartureTime) > new Date(b.scheduledDepartureTime)) ? 1 : -1);
   }
 
   return <div className="journey-list">{displayJourneyCards()}</div>;
 };
+
 
 class JourneyType {
   constructor(originStation: string, destinationStation: string, platform: string, scheduledDepartureTime: string, estimatedDepartureTime: string, arrivalTime: string, cancelled: boolean){
@@ -58,13 +73,13 @@ class JourneyType {
     this.cancelled = cancelled;
     this.key = Math.random() * 10000000;
   }
-  originStation: String;
-  destinationStation: String;
+  originStation: string;
+  destinationStation: string;
   key: number;
-  platform: String;
-  scheduledDepartureTime: String;
-  estimatedDepartureTime: String;
-  arrivalTime: String;
+  platform: string;
+  scheduledDepartureTime: string;
+  estimatedDepartureTime: string;
+  arrivalTime: string;
   cancelled: Boolean;
 }
 

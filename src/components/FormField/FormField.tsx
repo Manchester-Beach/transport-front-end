@@ -22,14 +22,18 @@ class FormField extends Component<FormProps, FormState> {
   filterStations = (inputValue: string) => {
     return this.props.stations.filter((i: StationOption) =>
       i.value.name.toLowerCase().includes(inputValue.toLowerCase())
-    );
+    ).slice(0,20);
   };
 
   promiseOptions = (inputValue: string) =>
     new Promise(resolve => {
-      setTimeout(() => {
+      if(inputValue == undefined) {
+        resolve(this.props.stations.slice(0,5));
+      }
+      else {
         resolve(this.filterStations(inputValue));
-      }, 3000);
+      }
+        
     });
 
   render() {

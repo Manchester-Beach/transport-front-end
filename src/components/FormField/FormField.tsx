@@ -27,20 +27,14 @@ class FormField extends Component<FormProps, FormState> {
 
   promiseOptions = (inputValue: string) =>
     new Promise(resolve => {
-      if(inputValue == undefined) {
-        resolve(this.props.stations.slice(0,5));
-      }
-      else {
         resolve(this.filterStations(inputValue));
-      }
-        
     });
 
   render() {
     return (
       <AsyncSelect
         cacheOptions
-        defaultOptions
+        defaultOptions={this.props.stations.slice(0,5)}
         loadOptions={this.promiseOptions}
         placeholder={"Select your " + this.props.placeholder}
         onChange={this.onStationSelected}

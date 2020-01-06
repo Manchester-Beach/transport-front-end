@@ -21,10 +21,9 @@ const App: React.FC = () => {
         <Header />
       </header>
       <div id="main">
-        <JourneyForm refreshPage={refreshCards}/>
+        <JourneyForm refreshPage={refreshCards} />
         <JourneyCardList refreshCards={refreshCards} journeys={journeys} key={date}/>
       </div>
-      Last reload: {date}
     </div>
   );
 };

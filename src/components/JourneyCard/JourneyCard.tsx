@@ -75,7 +75,7 @@ const JourneyCard: React.FC<JourneyCardProps> = (props) => {
           fetchFurtherJourneys(journeyIndex + 1);
         }
 
-        setNextTrain("Next train is at " + data["scheduledJourneys"] + " from platform " + data["platform"]);
+        setNextTrain("Next train is at " + data["scheduledDeparture"] + " from platform " + data["platform"]);
       }
     )
   }

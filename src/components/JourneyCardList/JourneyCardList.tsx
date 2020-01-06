@@ -4,9 +4,12 @@ import "./JourneyCardList.css";
 
 const API_URL = "http://localhost:8080/journeys";
 
-const useForceUpdate = () => useState()[1];
+type JourneyCardListProps = {
+  refreshCards : () => void,
+  journeys : JourneyType[]
+}
 
-const JourneyCardList: React.FC = () => {
+const JourneyCardList: React.FC<JourneyCardListProps> = (props) => {
   const [journeys, setJourneys] = useState<JourneyType[]>([]);
 
   useEffect(() => {
@@ -23,9 +26,7 @@ const JourneyCardList: React.FC = () => {
 
 
   function handleChildClick(index: number){
-    fetch(API_URL + "/" + index, {method: 'delete'}).then(
-      () => window.location.reload()
-    );
+    fetch(API_URL + "/" + index, {method: 'delete'}).then(() => props.refreshCards());
     console.log("Removed journey " + index);
   }
 

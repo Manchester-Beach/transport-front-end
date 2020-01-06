@@ -26,7 +26,6 @@ class ApiService {
     });
 
     console.log("Response", response.status);
-    window.location.reload();
   }
 }
 

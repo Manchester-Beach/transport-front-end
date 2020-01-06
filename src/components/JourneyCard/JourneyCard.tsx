@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { Card } from "react-bootstrap";
 import "./JourneyCard.css";
+import { IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const API_SCHED_URL = "http://localhost:8080/scheduledJourneys/";
 
@@ -9,6 +11,8 @@ type JourneyCardProps = {
   destinationCrs?: String;
   origin?: String;
   destination?: String;
+  id?: (toDelete: number) => void;
+  parentCallback: () => void;
 };
 
 function showDepartureTime(sched: undefined | String, est: undefined | String, cancelled: Boolean | undefined){
@@ -24,8 +28,6 @@ function showDepartureTime(sched: undefined | String, est: undefined | String, c
 
 const JourneyCard: React.FC<JourneyCardProps> = (props) => {
 
-  const [originStation, setOriginStation] = useState("");
-  const [destinationStation, setDestinationStation] = useState("");
   const [cancelled, setCancelled] = useState(false);
   const [platform, setPlatform] = useState("");
   const [scheduledDeparture, setScheduledDeparture] = useState("");
@@ -37,9 +39,10 @@ const JourneyCard: React.FC<JourneyCardProps> = (props) => {
     setInterval(fetchData, 60000);
   });
 
+
   function fetchData(){
     console.log("Refreshing journey info at " + new Date().toLocaleTimeString());
-    const schedRes = fetch(API_SCHED_URL + props.originCrs + "/" + props.destinationCrs).then(
+    fetch(API_SCHED_URL + props.originCrs + "/" + props.destinationCrs).then(
       response => {
         const data = response.json();
         return JSON.stringify(data) == null ? null : data;
@@ -61,7 +64,7 @@ const JourneyCard: React.FC<JourneyCardProps> = (props) => {
     <div className="journey-card-div">
       <Card className={journeyLateClassNames}>
         <div className="title-div"><Card.Title>{props.origin} - {props.destination}</Card.Title>{cancelled || scheduledDeparture === undefined ? null : <div className="platform">Platform: {platform}</div>}</div>
-        {scheduledDeparture !== undefined ? <div>Departure: {showDepartureTime(scheduledDeparture, estimatedDeparture, cancelled)}&nbsp;</div> : <div>No direct train available!</div>}
+        <div className="middle-row">{scheduledDeparture !== undefined ? <div>Departure: {showDepartureTime(scheduledDeparture, estimatedDeparture, cancelled)}&nbsp;</div> : <div>No direct train available!</div>}<div onClick={props.parentCallback}><IconButton aria-label="delete" className="delete-button" size="small"><DeleteIcon fontSize="small" /></IconButton></div></div>
         {scheduledDeparture !== undefined ? (cancelled ? <span>&nbsp;</span> : <div>Arrival: {arrivalTime}</div>) : null }
       </Card>
     </div>

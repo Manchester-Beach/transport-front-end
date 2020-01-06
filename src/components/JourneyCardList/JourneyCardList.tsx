@@ -4,6 +4,7 @@ import "./JourneyCardList.css";
 
 const API_URL = "http://localhost:8080/journeys";
 
+
 const JourneyCardList: React.FC = () => {
   const [journeys, setJourneys] = useState<JourneyType[]>([]);
 
@@ -14,13 +15,19 @@ const JourneyCardList: React.FC = () => {
   function displayJourneyCards(){
     return (
       journeys.map((j, i) => {
-        return <JourneyCard key={i} originCrs={j.originCrs} destinationCrs={j.destinationCrs} origin={j.originStation} destination={j.destinationStation} />
+        return <JourneyCard key={i} originCrs={j.originCrs} destinationCrs={j.destinationCrs} origin={j.originStation} destination={j.destinationStation} parentCallback={() => handleChildClick(i)} />
       })
     );
   }
 
+
+  function handleChildClick(index: number){
+    fetch(API_URL + "/" + index, {method: 'delete'}).then();
+    console.log("Removed journey " + index);
+  }
+
   async function fetchData() {
-    const res = await fetch(API_URL).then(result => result.json()).then(result => {
+    await fetch(API_URL).then(result => result.json()).then(result => {
       for(let i in result["journeys"]){
         setJourneys(journeys => [...journeys, new JourneyType(result["journeys"][i]["originStation"]["crs"],
         result["journeys"][i]["destinationStation"]["crs"],
@@ -30,10 +37,10 @@ const JourneyCardList: React.FC = () => {
       }
 
     });
-
   }
 
   return <div className="journey-list">{displayJourneyCards()}</div>;
+
 };
 
 

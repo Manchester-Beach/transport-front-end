@@ -12,10 +12,14 @@ import "./JourneyForm.css";
 type FormState = {
   fromStation?: Station;
   toStation?: Station;
+  refreshPage?: string;
   stationList: Array<Station>;
+
 };
 
-type FormProps = {};
+type FormProps = {
+  refreshPage: (arg: number) => number;
+};
 
 class JourneyForm extends Component<FormProps, FormState> {
   apiService: ApiService;
@@ -74,8 +78,14 @@ class JourneyForm extends Component<FormProps, FormState> {
       let destinationCrs = this.state.toStation.crs;
 
       this.apiService.postJourney(originCrs, destinationCrs);
+      this.sendData();
     }
   };
+
+  sendData = () => {
+    this.props.refreshPage(Math.random());
+    console.log(this.props.refreshPage);
+  }
 
   render() {
     return (

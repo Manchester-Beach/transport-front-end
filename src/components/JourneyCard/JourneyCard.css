@@ -24,3 +24,12 @@
   justify-content: space-between;
   display: flex;
 }
+
+.middle-row{
+  display:flex;
+  justify-content: space-between;
+}
+
+.delete-button:focus{
+  outline: 0;
+}

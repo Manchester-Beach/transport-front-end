@@ -4,14 +4,20 @@ import JourneyCardList from "../JourneyCardList/JourneyCardList";
 import JourneyForm from "../JourneyForm/JourneyForm";
 import "./App.css";
 
+
 const App: React.FC = () => {
+
+  function callbackFunction(data: any){
+    console.log("do something!!");
+    return data;
+  }
   return (
     <div className="App">
       <header className="App-header">
         <Header />
       </header>
       <div id="main">
-        <JourneyForm />
+        <JourneyForm refreshPage={callbackFunction}/>
         <JourneyCardList />
       </div>
     </div>

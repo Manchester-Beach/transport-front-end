@@ -63,8 +63,18 @@ const JourneyCard: React.FC<JourneyCardProps> = (props) => {
   return (
     <div className="journey-card-div">
       <Card className={journeyLateClassNames}>
-        <div className="title-div"><Card.Title>{props.origin} - {props.destination}</Card.Title>{cancelled || scheduledDeparture === undefined ? null : <div className="platform">Platform: {platform}</div>}</div>
-        <div className="middle-row">{scheduledDeparture !== undefined ? <div>Departure: {showDepartureTime(scheduledDeparture, estimatedDeparture, cancelled)}&nbsp;</div> : <div>No direct train available!</div>}<div onClick={props.parentCallback}><IconButton aria-label="delete" className="delete-button" size="small"><DeleteIcon fontSize="small" /></IconButton></div></div>
+        <div className="title-div">
+          <Card.Title>{props.origin} - {props.destination}</Card.Title>
+          {cancelled || scheduledDeparture === undefined ? null : <div className="platform">Platform: {platform}</div>}
+        </div>
+        <div className="middle-row">
+          {scheduledDeparture !== undefined ? 
+          <div>Departure: {showDepartureTime(scheduledDeparture, estimatedDeparture, cancelled)}&nbsp;
+          </div> : <div>No direct train available!</div>}
+          <div onClick={props.parentCallback}>
+            <IconButton aria-label="delete" className="delete-button" size="small"><DeleteIcon fontSize="small" /></IconButton>
+            </div>
+          </div>
         {scheduledDeparture !== undefined ? (cancelled ? <span>&nbsp;</span> : <div>Arrival: {arrivalTime}</div>) : null }
       </Card>
     </div>

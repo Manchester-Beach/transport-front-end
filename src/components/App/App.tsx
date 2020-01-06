@@ -8,9 +8,11 @@ import { JourneyType } from "../../utils/Types";
 const App: React.FC = () => {
 
   const [journeys, setJourneys] = useState<JourneyType[]>([]);
+  const [date, setDate] = useState(Date.now());
 
   async function refreshCards(){
-    setJourneys([]);
+    console.log("Button");
+    setDate(Date.now());
   }
 
   return (
@@ -20,8 +22,9 @@ const App: React.FC = () => {
       </header>
       <div id="main">
         <JourneyForm refreshPage={refreshCards}/>
-        <JourneyCardList refreshCards={refreshCards} journeys={journeys}/>
+        <JourneyCardList refreshCards={refreshCards} journeys={journeys} key={date}/>
       </div>
+      Last reload: {date}
     </div>
   );
 };

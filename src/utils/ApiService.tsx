@@ -1,12 +1,18 @@
 import { Station } from "./Types";
+import { Config } from "../Config/config";
 
 class ApiService {
   baseUrl: string;
   constructor() {
-    this.baseUrl = "http://localhost:8080";
+    if(Config.useProductionApi) {
+      this.baseUrl = Config.productionApiUrl;
+    }
+    else {
+      this.baseUrl = Config.localApiURL;
+    }
   }
   async getAllStations(): Promise<Array<Station>> {
-    let response = await fetch(this.baseUrl + "/stations");
+    let response = await fetch(this.baseUrl + "stations");
     let json = await response.json();
     let stationArray = json.stations;
 
@@ -16,7 +22,7 @@ class ApiService {
   }
 
   async postJourney(originCrs: string, destinationCrs: string) {
-    let response = await fetch(this.baseUrl + "/journeys", {
+    let response = await fetch(this.baseUrl + "journeys", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -26,6 +32,22 @@ class ApiService {
     });
 
     console.log("Response", response.status);
+  }
+
+  getBaseUrl() : string{
+    return this.baseUrl;
+  }
+
+  generateFetchJourneyRequest(originCrs?: String, destinationCrs? : String) : string {
+    return this.baseUrl + "scheduledJourneys/" + originCrs + "/" + destinationCrs + "/0";
+  }
+
+  generateFutureJourneyFetchRequest(index: Number, originCrs?: String, destinationCrs? : String) : string{
+    return this.baseUrl +"scheduledJourneys/"+ originCrs + "/" + destinationCrs + "/" + index;
+  }
+
+  generateJourneyDeleteRequest(index: number): string {
+    return this.baseUrl + "journeys/" + index;
   }
 }
 

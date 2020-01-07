@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import JourneyCard from "../JourneyCard/JourneyCard";
 import "./JourneyCardList.css";
-
-const API_URL = "http://localhost:8080/journeys";
+import ApiService from "../../utils/ApiService";
 
 type JourneyCardListProps = {
   refreshCards : () => void,
@@ -11,6 +10,8 @@ type JourneyCardListProps = {
 
 const JourneyCardList: React.FC<JourneyCardListProps> = (props) => {
   const [journeys, setJourneys] = useState<JourneyType[]>([]);
+
+  let apiService = new ApiService();
 
   useEffect(() => {
     fetchData();
@@ -24,14 +25,13 @@ const JourneyCardList: React.FC<JourneyCardListProps> = (props) => {
     );
   }
 
-
   function handleChildClick(index: number){
-    fetch(API_URL + "/" + index, {method: 'delete'}).then(() => props.refreshCards());
+    fetch(apiService.generateJourneyDeleteRequest(index), {method: 'delete'}).then(() => props.refreshCards());
     console.log("Removed journey " + index);
   }
 
   async function fetchData() {
-    await fetch(API_URL).then(result => result.json()).then(result => {
+    await fetch(apiService.getBaseUrl()+"journeys").then(result => result.json()).then(result => {
       for(let i in result["journeys"]){
         setJourneys(journeys => [...journeys, new JourneyType(result["journeys"][i]["originStation"]["crs"],
         result["journeys"][i]["destinationStation"]["crs"],
@@ -39,7 +39,6 @@ const JourneyCardList: React.FC<JourneyCardListProps> = (props) => {
         result["journeys"][i]["destinationStation"]["name"])]);
 
       }
-
     });
   }
 

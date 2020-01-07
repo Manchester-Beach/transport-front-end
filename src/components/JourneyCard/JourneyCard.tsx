@@ -3,8 +3,7 @@ import { Card } from "react-bootstrap";
 import "./JourneyCard.css";
 import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-
-const API_SCHED_URL = "http://localhost:8080/scheduledJourneys/";
+import ApiService from "../../utils/ApiService";
 
 type JourneyCardProps = {
   originCrs?: String;
@@ -35,15 +34,16 @@ const JourneyCard: React.FC<JourneyCardProps> = (props) => {
   const [arrivalTime, setArrivalTime] = useState("");
   const [nextTrain, setNextTrain] = useState("");
 
+  let apiService = new ApiService();
+
   useEffect(() => {
     fetchData();
     setInterval(fetchData, 60000);
   });
 
-
   function fetchData(){
     console.log("Refreshing journey info at " + new Date().toLocaleTimeString());
-    fetch(API_SCHED_URL + props.originCrs + "/" + props.destinationCrs + "/0").then(
+    fetch(apiService.generateFetchJourneyRequest(props.originCrs, props.destinationCrs)).then(
       response => {
         const data = response.json();
         return JSON.stringify(data) == null ? null : data;
@@ -64,7 +64,7 @@ const JourneyCard: React.FC<JourneyCardProps> = (props) => {
   }
 
   function fetchFurtherJourneys(journeyIndex: number){
-    fetch(API_SCHED_URL + props.originCrs + "/" + props.destinationCrs + "/" + journeyIndex).then(
+    fetch(apiService.generateFutureJourneyFetchRequest(journeyIndex, props.originCrs, props.destinationCrs)).then(
       response => {
         const data = response.json();
         return JSON.stringify(data) == null ? null : data;

@@ -1,5 +1,5 @@
 export class Config {
-    static useProductionApi = false;
-    static productionApiUrl = "https://beach-train-app.herokuapp.com/";
+    static useProductionApi = true;
+    static productionApiUrl = "https://beach-train-backend.herokuapp.com/";
     static localApiURL = "http://localhost:8080/";
 };

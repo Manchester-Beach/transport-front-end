@@ -1,5 +1,6 @@
 import React from "react";
-import Header from "../Header/Header"
+import Header from "../Header/Header";
+import Clock from "../Clock/Clock";
 
 const DashboardApp : React.FC = () => {
   return (
@@ -7,7 +8,7 @@ const DashboardApp : React.FC = () => {
       <header className="dashboard-header">
         <Header text="Dashboard"/>
       </header>
-      <div></div>
+      <div><Clock /></div>
     </div>
   );
 }

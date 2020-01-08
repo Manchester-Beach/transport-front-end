@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import "./Clock.css"
 
 const Clock : React.FC = () => {
 
-  const [currentTime, setCurrentTime] = useState(Date().toString());
+  const [currentTime, setCurrentTime] = useState("");
 
   useEffect(() => {
     setInterval(updateTime, 1000);
   });
 
   function updateTime(){
-    setCurrentTime(Date().toString());
+    const currentDate = new Date();
+    setCurrentTime(currentDate.toLocaleTimeString());
   }
 
   return (
-    <div>{currentTime}</div>
+    <div className="clock-div">
+      {currentTime}
+    </div>
   );
 }
 

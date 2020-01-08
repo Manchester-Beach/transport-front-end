@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../Header/Header";
 import JourneyCardList from "../JourneyCardList/JourneyCardList";
 import JourneyForm from "../JourneyForm/JourneyForm";
@@ -18,7 +18,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <Header />
+        <Header text="Transport" />
       </header>
       <div id="main">
         <JourneyForm refreshPage={refreshCards} />

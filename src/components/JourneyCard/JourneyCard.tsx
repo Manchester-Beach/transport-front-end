@@ -4,16 +4,8 @@ import "./JourneyCard.css";
 import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ApiService from "../../utils/ApiService";
-
-type JourneyCardProps = {
-  originCrs?: String;
-  destinationCrs?: String;
-  origin?: String;
-  destination?: String;
-  id?: (toDelete: number) => void;
-  parentCallback: () => void;
-  onDashboard : Boolean;
-};
+import { JourneyCardData } from "../../utils/Types";
+import JourneyCardService from "./JourneyCardService";
 
 function showDepartureTime(sched: undefined | String, est: undefined | String, cancelled: Boolean | undefined){
   if(sched === est){
@@ -26,73 +18,37 @@ function showDepartureTime(sched: undefined | String, est: undefined | String, c
   return <span><span style={{textDecorationLine:"line-through"}}>{sched}</span> <span style={{color: "red"}}>{est} (train is late)</span></span>
 }
 
-const JourneyCard: React.FC<JourneyCardProps> = (props) => {
+const JourneyCard: React.FC<JourneyCardData> = (props) => {
 
-  const [cancelled, setCancelled] = useState(false);
-  const [platform, setPlatform] = useState("");
-  const [scheduledDeparture, setScheduledDeparture] = useState("");
-  const [estimatedDeparture, setEstimatedDeparture] = useState("");
-  const [arrivalTime, setArrivalTime] = useState("");
-  const [nextTrain, setNextTrain] = useState("");
+  const refreshData = () => {
+    setDate(Date.now());
+  }
 
-  let apiService = new ApiService();
+  const [journeyService, setJourneyService] = useState(new JourneyCardService(props, refreshData));
+  const [date, setDate] = useState(Date.now());
 
   useEffect(() => {
     fetchData();
-    setInterval(fetchData, 60000);
-  });
+  },[]);
 
-  function fetchData(){
-    console.log("Refreshing journey info at " + new Date().toLocaleTimeString());
-    fetch(apiService.generateFetchJourneyRequest(props.originCrs, props.destinationCrs)).then(
-      response => {
-        const data = response.json();
-        return JSON.stringify(data) == null ? null : data;
-
-      }
-    ).then(data =>
-    {
-      if(data["cancelled"]){
-        fetchFurtherJourneys(1);
-      }
-      setPlatform(data["platform"]);
-      setScheduledDeparture(data["scheduledDeparture"]);
-      setEstimatedDeparture(data["expectedDeparture"]);
-      setArrivalTime(data["arrivalTime"]);
-      setCancelled(data["cancelled"]);
-    }
-    );
+  function fetchData() {
+    journeyService.fetchJourneyData();
+    setTimeout(fetchData, 10000);
   }
 
-  function fetchFurtherJourneys(journeyIndex: number){
-    fetch(apiService.generateFutureJourneyFetchRequest(journeyIndex, props.originCrs, props.destinationCrs)).then(
-      response => {
-        const data = response.json();
-        return JSON.stringify(data) == null ? null : data;
-      }
-    ).then(data =>
-      {
-        if(data["cancelled"]){
-          fetchFurtherJourneys(journeyIndex + 1);
-        }
-
-        setNextTrain("Next train is at " + data["scheduledDeparture"] + " from Platform " + data["platform"]);
-      }
-    )
-  }
-
-  const journeyLateClassNames = scheduledDeparture === estimatedDeparture && estimatedDeparture !== undefined ? "journey-card journey-on-time" : "journey-card journey-late";
+  const journeyLateClassNames = journeyService.scheduledDeparture === journeyService.estimatedDeparture
+   && journeyService.estimatedDeparture !== undefined ? "journey-card journey-on-time" : "journey-card journey-late";
 
   return (
     <div className="journey-card-div">
       <Card className={journeyLateClassNames}>
         <div className="title-div">
-          <Card.Title>{props.origin} - {props.destination}</Card.Title>
-          {cancelled || scheduledDeparture === undefined ? null : <div className="platform">Platform: {platform}</div>}
+          <Card.Title>{journeyService.journeyData.origin} - {journeyService.journeyData.destination}</Card.Title>
+          {journeyService.cancelled || journeyService.scheduledDeparture === undefined ? null : <div className="platform">Platform: {journeyService.platform}</div>}
         </div>
         <div className="middle-row">
-          {scheduledDeparture !== undefined ? 
-              <div>Departure: {showDepartureTime(scheduledDeparture, estimatedDeparture, cancelled)}&nbsp;</div> : <div>No direct train available!</div>}
+          {journeyService.scheduledDeparture !== undefined ? 
+              <div>Departure: {showDepartureTime(journeyService.scheduledDeparture, journeyService.estimatedDeparture, journeyService.cancelled)}&nbsp;</div> : <div>No direct train available!</div>}
           <div onClick={props.parentCallback}>
             {props.onDashboard ? null : 
             <IconButton aria-label="delete" className="delete-button-dashboard" size="small">
@@ -102,7 +58,7 @@ const JourneyCard: React.FC<JourneyCardProps> = (props) => {
           
         </div>
         <div>
-            {scheduledDeparture !== undefined ? (cancelled ? <span><i>{nextTrain}</i></span> : <div>Arrival: {arrivalTime}</div>) : null }
+            {journeyService.scheduledDeparture !== undefined ? (journeyService.cancelled ? <span><i>{journeyService.nextTrain}</i></span> : <div>Arrival: {journeyService.arrivalTime}</div>) : null }
           </div>
       </Card>
     </div>

@@ -6,6 +6,7 @@ const Clock : React.FC = () => {
   const [currentTime, setCurrentTime] = useState("");
 
   useEffect(() => {
+    updateTime();
     setInterval(updateTime, 1000);
   });
 

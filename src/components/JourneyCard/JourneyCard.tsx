@@ -3,7 +3,6 @@ import { Card } from "react-bootstrap";
 import "./JourneyCard.css";
 import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import ApiService from "../../utils/ApiService";
 import { JourneyCardData } from "../../utils/Types";
 import JourneyCardService from "./JourneyCardService";
 

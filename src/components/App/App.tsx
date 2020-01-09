@@ -11,7 +11,6 @@ const App: React.FC = () => {
   const [date, setDate] = useState(Date.now());
 
   async function refreshCards(){
-    console.log("Button");
     setDate(Date.now());
   }
 
@@ -22,7 +21,7 @@ const App: React.FC = () => {
       </header>
       <div id="main">
         <JourneyForm refreshPage={refreshCards} />
-        <JourneyCardList refreshCards={refreshCards} journeys={journeys} key={date}/>
+        <JourneyCardList refreshCards={refreshCards} journeys={journeys} key={date} onDashboard={false}/>
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ type JourneyCardProps = {
   destination?: String;
   id?: (toDelete: number) => void;
   parentCallback: () => void;
+  onDashboard : Boolean;
 };
 
 function showDepartureTime(sched: undefined | String, est: undefined | String, cancelled: Boolean | undefined){
@@ -81,12 +82,28 @@ const JourneyCard: React.FC<JourneyCardProps> = (props) => {
   }
 
   const journeyLateClassNames = scheduledDeparture === estimatedDeparture && estimatedDeparture !== undefined ? "journey-card journey-on-time" : "journey-card journey-late";
+
   return (
     <div className="journey-card-div">
       <Card className={journeyLateClassNames}>
-        <div className="title-div"><Card.Title>{props.origin} - {props.destination}</Card.Title>{cancelled || scheduledDeparture === undefined ? null : <div className="platform">Platform: {platform}</div>}</div>
-        <div className="middle-row">{scheduledDeparture !== undefined ? <div>Departure: {showDepartureTime(scheduledDeparture, estimatedDeparture, cancelled)}&nbsp;</div> : <div>No direct train available!</div>}<div onClick={props.parentCallback}><IconButton aria-label="delete" className="delete-button" size="small"><DeleteIcon fontSize="small" /></IconButton></div></div>
-        {scheduledDeparture !== undefined ? (cancelled ? <span><i>{nextTrain}</i></span> : <div>Arrival: {arrivalTime}</div>) : null }
+        <div className="title-div">
+          <Card.Title>{props.origin} - {props.destination}</Card.Title>
+          {cancelled || scheduledDeparture === undefined ? null : <div className="platform">Platform: {platform}</div>}
+        </div>
+        <div className="middle-row">
+          {scheduledDeparture !== undefined ? 
+              <div>Departure: {showDepartureTime(scheduledDeparture, estimatedDeparture, cancelled)}&nbsp;</div> : <div>No direct train available!</div>}
+          <div onClick={props.parentCallback}>
+            {props.onDashboard ? null : 
+            <IconButton aria-label="delete" className="delete-button-dashboard" size="small">
+              <DeleteIcon fontSize="small" />
+            </IconButton>}
+          </div>
+          
+        </div>
+        <div>
+            {scheduledDeparture !== undefined ? (cancelled ? <span><i>{nextTrain}</i></span> : <div>Arrival: {arrivalTime}</div>) : null }
+          </div>
       </Card>
     </div>
   );

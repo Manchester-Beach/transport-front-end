@@ -20,6 +20,10 @@
   flex: 0 43%;
 }
 
+.journey-card-div div{
+  font-size: max(1vw,14px);
+}
+
 .title-div{
   justify-content: space-between;
   display: flex;

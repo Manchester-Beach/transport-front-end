@@ -5,7 +5,8 @@ import ApiService from "../../utils/ApiService";
 
 type JourneyCardListProps = {
   refreshCards : () => void,
-  journeys : JourneyType[]
+  journeys : JourneyType[],
+  onDashboard : Boolean
 }
 
 const JourneyCardList: React.FC<JourneyCardListProps> = (props) => {
@@ -20,7 +21,7 @@ const JourneyCardList: React.FC<JourneyCardListProps> = (props) => {
   function displayJourneyCards(){
     return (
       journeys.map((j, i) => {
-        return <JourneyCard key={i} originCrs={j.originCrs} destinationCrs={j.destinationCrs} origin={j.originStation} destination={j.destinationStation} parentCallback={() => handleChildClick(i)} />
+        return <JourneyCard key={i} originCrs={j.originCrs} destinationCrs={j.destinationCrs} origin={j.originStation} destination={j.destinationStation} parentCallback={() => handleChildClick(i)} onDashboard={props.onDashboard}/>
       })
     );
   }

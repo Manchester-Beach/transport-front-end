@@ -39,11 +39,6 @@
 
 .middle-row{
   display:flex;
-  justify-content: space-between;
-}
-
-.middle-row-dash{
-  display:flex;
 }
 
 .delete-button:focus{

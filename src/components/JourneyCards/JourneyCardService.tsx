@@ -1,5 +1,8 @@
 import { JourneyType } from "../../utils/Types";
 import ApiService from "../../utils/ApiService";
+import { Card } from "react-bootstrap";
+import React from "react";
+import TrainIcon from '@material-ui/icons/Train';
 
 class JourneyCardService {
     journeyData : JourneyType;
@@ -63,6 +66,51 @@ class JourneyCardService {
           }
         )
       }
+
+      showTitle(titleSize : "small" | "large" | "default") {
+        return <Card.Title><TrainIcon fontSize={titleSize}></TrainIcon>{this.journeyData.originStation} - {this.journeyData.destinationStation}</Card.Title>;
+      }
+
+      showPlatform(): React.ReactNode {
+        return this.cancelled || this.scheduledDeparture === undefined ?
+          null : <div className="platform">Platform: {this.platform}</div>;
+      }
+
+     showDepartureTiming() {
+        if(this.scheduledDeparture !== undefined) {
+          return <div>{this.getDepartureTime(this.scheduledDeparture, this.estimatedDeparture, this.cancelled)}
+          </div>
+        }
+        else {
+          return <div>No direct train available!</div>;
+        }
+      }
+      
+      private getDepartureTime(sched: undefined | String, est: undefined | String, cancelled: Boolean | undefined){
+        if(sched === est){
+          return <span>{sched}</span>
+        }
+        else if (cancelled) {
+          return <span><span style={{textDecorationLine:"line-through"}}>{sched}</span> <span style={{color: "red"}}> Cancelled</span></span>
+        }
+      
+        return <span><span style={{textDecorationLine:"line-through"}}>{sched}</span> <span style={{color: "red"}}>{est} (train is late)</span></span>
+      }
+
+      showArrivalTiming() {
+        if(this.scheduledDeparture !== undefined) {
+          if(this.cancelled) {
+            return <span><i>{this.nextTrain}</i></span>
+          }
+          else {
+            return <span>{this.arrivalTime}</span>
+          }
+        }
+        else {
+          return null
+        }
+      }
+      
 }
 
 export default JourneyCardService;

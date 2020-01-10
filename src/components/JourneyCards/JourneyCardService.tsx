@@ -1,8 +1,8 @@
-import { JourneyCardData } from "../../utils/Types";
+import { JourneyType } from "../../utils/Types";
 import ApiService from "../../utils/ApiService";
 
 class JourneyCardService {
-    journeyData : JourneyCardData;
+    journeyData : JourneyType;
     apiService : ApiService;
 
     platform : String = "";
@@ -18,7 +18,7 @@ class JourneyCardService {
 
     refreshCallback : ()=>void;
 
-    constructor(journeyData : JourneyCardData, refreshCallback : ()=>void) {
+    constructor(journeyData : JourneyType, refreshCallback : ()=>void) {
         this.journeyData = journeyData;
         this.apiService = new ApiService();
         this.refreshCallback = refreshCallback;

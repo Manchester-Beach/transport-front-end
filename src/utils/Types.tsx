@@ -23,12 +23,7 @@ export class JourneyType {
   key: number;
 }
 
-export type JourneyCardData = {
-  originCrs?: String;
-  destinationCrs?: String;
-  origin?: String;
-  destination?: String;
-  id?: (toDelete: number) => void;
-  parentCallback: () => void;
-  onDashboard : Boolean;
-};
+export type JourneyCardProps = {
+  journeyData : JourneyType,
+  parentCallback: () => void
+}

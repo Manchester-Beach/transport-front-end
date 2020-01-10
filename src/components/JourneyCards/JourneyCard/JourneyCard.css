@@ -24,6 +24,14 @@
   font-size: max(1vw,14px);
 }
 
+.journey-dashboard-card-div{
+  flex: 0 43%;
+}
+
+.journey-dashboard-card-div div{
+  font-size: max(1.5vw,14px);
+}
+
 .title-div{
   justify-content: space-between;
   display: flex;

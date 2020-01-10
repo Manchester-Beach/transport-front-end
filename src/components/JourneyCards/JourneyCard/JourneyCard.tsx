@@ -3,8 +3,8 @@ import { Card } from "react-bootstrap";
 import "./JourneyCard.css";
 import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { JourneyCardData } from "../../utils/Types";
-import JourneyCardService from "./JourneyCardService";
+import { JourneyCardProps } from "../../../utils/Types";
+import JourneyCardService from "../JourneyCardService";
 
 function showDepartureTime(sched: undefined | String, est: undefined | String, cancelled: Boolean | undefined){
   if(sched === est){
@@ -17,13 +17,13 @@ function showDepartureTime(sched: undefined | String, est: undefined | String, c
   return <span><span style={{textDecorationLine:"line-through"}}>{sched}</span> <span style={{color: "red"}}>{est} (train is late)</span></span>
 }
 
-const JourneyCard: React.FC<JourneyCardData> = (props) => {
+const JourneyCard: React.FC<JourneyCardProps> = (props) => {
 
   const refreshData = () => {
     setDate(Date.now());
   }
 
-  const [journeyService, setJourneyService] = useState(new JourneyCardService(props, refreshData));
+  const [journeyService, setJourneyService] = useState(new JourneyCardService(props.journeyData, refreshData));
   const [date, setDate] = useState(Date.now());
 
   useEffect(() => {
@@ -42,19 +42,18 @@ const JourneyCard: React.FC<JourneyCardData> = (props) => {
     <div className="journey-card-div">
       <Card className={journeyLateClassNames}>
         <div className="title-div">
-          <Card.Title>{journeyService.journeyData.origin} - {journeyService.journeyData.destination}</Card.Title>
+          <Card.Title>{journeyService.journeyData.originStation} - {journeyService.journeyData.destinationStation}</Card.Title>
           {journeyService.cancelled || journeyService.scheduledDeparture === undefined ? null : <div className="platform">Platform: {journeyService.platform}</div>}
         </div>
         <div className="middle-row">
           {journeyService.scheduledDeparture !== undefined ? 
               <div>Departure: {showDepartureTime(journeyService.scheduledDeparture, journeyService.estimatedDeparture, journeyService.cancelled)}&nbsp;</div> : <div>No direct train available!</div>}
           <div onClick={props.parentCallback}>
-            {props.onDashboard ? null : 
             <IconButton aria-label="delete" className="delete-button-dashboard" size="small">
               <DeleteIcon fontSize="small" />
-            </IconButton>}
+            </IconButton>
           </div>
-          
+
         </div>
         <div>
             {journeyService.scheduledDeparture !== undefined ? (journeyService.cancelled ? <span><i>{journeyService.nextTrain}</i></span> : <div>Arrival: {journeyService.arrivalTime}</div>) : null }

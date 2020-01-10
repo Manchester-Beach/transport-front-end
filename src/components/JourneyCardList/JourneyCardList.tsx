@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import JourneyCard from "../JourneyCard/JourneyCard";
+import JourneyCard from "../JourneyCards/JourneyCard/JourneyCard";
 import "./JourneyCardList.css";
 import ApiService from "../../utils/ApiService";
+import {JourneyType} from "../../utils/Types";
+import JourneyDashboardCard from "../JourneyCards/JourneyDashboardCard/JourneyDashboardCard";
 
 type JourneyCardListProps = {
   refreshCards : () => void,
@@ -21,7 +23,13 @@ const JourneyCardList: React.FC<JourneyCardListProps> = (props) => {
   function displayJourneyCards(){
     return (
       journeys.map((j, i) => {
-        return <JourneyCard key={i} originCrs={j.originCrs} destinationCrs={j.destinationCrs} origin={j.originStation} destination={j.destinationStation} parentCallback={() => handleChildClick(i)} onDashboard={props.onDashboard}/>
+        if(props.onDashboard) {
+          return <JourneyDashboardCard key={i} journeyData={j} parentCallback={() => handleChildClick(i)}/>
+        }
+        else {
+          return <JourneyCard key={i} journeyData={j} parentCallback={() => handleChildClick(i)}/>
+        }
+        
       })
     );
   }
@@ -46,21 +54,5 @@ const JourneyCardList: React.FC<JourneyCardListProps> = (props) => {
   return <div className="journey-list">{displayJourneyCards()}</div>;
 
 };
-
-
-class JourneyType {
-  constructor(originCrs: string, destinationCrs: string, originStation: string, destinationStation: string){
-    this.originCrs = originCrs;
-    this.destinationCrs = destinationCrs;
-    this.originStation = originStation;
-    this.destinationStation = destinationStation;
-    this.key = Math.random() * 10000000;
-  }
-  originCrs: string;
-  destinationCrs: string;
-  originStation: string;
-  destinationStation: string;
-  key: number;
-}
 
 export default JourneyCardList;

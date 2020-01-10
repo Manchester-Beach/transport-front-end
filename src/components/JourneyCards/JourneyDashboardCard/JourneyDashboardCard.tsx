@@ -3,6 +3,8 @@ import { Card } from "react-bootstrap";
 import "../JourneyCard/JourneyCard.css";
 import { JourneyCardProps } from "../../../utils/Types";
 import JourneyCardService from "../JourneyCardService";
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import TrainIcon from '@material-ui/icons/Train';
 
 function showDepartureTime(sched: undefined | String, est: undefined | String, cancelled: Boolean | undefined){
   if(sched === est){
@@ -40,13 +42,12 @@ const JourneyDashboardCard: React.FC<JourneyCardProps> = (props) => {
     <div className="journey-dashboard-card-div">
       <Card className={journeyLateClassNames}>
         <div className="title-div">
-          <Card.Title>{journeyService.journeyData.originStation} - {journeyService.journeyData.destinationStation}</Card.Title>
+          <Card.Title><TrainIcon fontSize="large"></TrainIcon>{journeyService.journeyData.originStation} - {journeyService.journeyData.destinationStation}</Card.Title>
           {journeyService.cancelled || journeyService.scheduledDeparture === undefined ? null : <div className="platform">Platform: {journeyService.platform}</div>}
         </div>
-        <div className="middle-row">
-          {journeyService.scheduledDeparture !== undefined ? 
-              <div>{showDepartureTime(journeyService.scheduledDeparture, journeyService.estimatedDeparture, journeyService.cancelled)}&nbsp;</div> : <div>No direct train available!</div>}
-                -> {journeyService.scheduledDeparture !== undefined ? (journeyService.cancelled ? <span><i>{journeyService.nextTrain}</i></span> : <div>{journeyService.arrivalTime}</div>) : null }
+        <div className="middle-row-dash">
+          {showDepartureTiming(journeyService)}
+          {showArrivalTiming(journeyService)}
         </div>
         <div>
           </div>
@@ -56,3 +57,27 @@ const JourneyDashboardCard: React.FC<JourneyCardProps> = (props) => {
 };
 
 export default JourneyDashboardCard;
+
+function showDepartureTiming(journeyService: JourneyCardService) {
+  if(journeyService.scheduledDeparture !== undefined) {
+    return <div>{showDepartureTime(journeyService.scheduledDeparture, journeyService.estimatedDeparture, journeyService.cancelled)}
+    <ArrowRightAltIcon fontSize="large"></ArrowRightAltIcon></div>
+  }
+  else {
+    return <div>No direct train available!</div>;
+  }
+}
+
+function showArrivalTiming(journeyService: JourneyCardService) {
+  if(journeyService.scheduledDeparture !== undefined) {
+    if(journeyService.cancelled) {
+      return <span><i>{journeyService.nextTrain}</i></span>
+    }
+    else {
+      return <div>{journeyService.arrivalTime}</div>
+    }
+  }
+  else {
+    return null
+  }
+}

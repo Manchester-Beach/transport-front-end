@@ -3,6 +3,7 @@ import Header from "../Header/Header";
 import Clock from "../Clock/Clock";
 import { JourneyType } from "../../utils/Types";
 import JourneyCardList from "../JourneyCardList/JourneyCardList";
+import "./DashboardApp.css";
 
 const DashboardApp : React.FC = () => {
   const [journeys, setJourneys] = useState<JourneyType[]>([]);

@@ -25,12 +25,12 @@
 }
 
 .journey-dashboard-card-div{
-  flex: 0 50%;
+  flex: 0 80%;
   color: black;
 }
 
 .journey-dashboard-card-div div{
-  font-size: 1.5vw;
+  font-size: 3vw;
 }
 
 .title-div{
@@ -40,6 +40,7 @@
 
 .middle-row{
   display:flex;
+  align-items: center;
 }
 
 .delete-button:focus{

@@ -35,7 +35,7 @@ const JourneyDashboardCard: React.FC<JourneyCardProps> = (props) => {
         </div>
         <div className="middle-row">
           {journeyService.showDepartureTiming()}
-          <ArrowRightAltIcon fontSize="large"></ArrowRightAltIcon>
+          <ArrowRightAltIcon fontSize="inherit"></ArrowRightAltIcon>
           {journeyService.showArrivalTiming()}
         </div>
         <div>

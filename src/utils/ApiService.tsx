@@ -1,5 +1,5 @@
 import { Station } from "./Types";
-import { Config } from "../config/config";
+import Config from "../config/config";
 
 class ApiService {
   baseUrl: string;

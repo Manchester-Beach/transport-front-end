@@ -5,7 +5,7 @@
 .journey-card{
   padding: 10px;
   margin: 10px 40px 10px 40px;
-  border-right-width: thick;
+  border-right-width: 1vw;
 }
 
 .journey-on-time{

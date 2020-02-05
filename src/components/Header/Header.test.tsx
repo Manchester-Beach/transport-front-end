@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import Header from './Header';
 
 test('renders Transport link in header', () => {
-  const { getByText } = render(<Header />);
-  const linkElement = getByText(/Transport/i);
+  const { getByText } = render(<Header text="TestHeader" />);
+  const linkElement = getByText("TestHeader");
   expect(linkElement).toBeInTheDocument();
 });

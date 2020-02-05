@@ -12,6 +12,7 @@ class ApiService {
     }
   }
   async getAllStations(): Promise<Array<Station>> {
+    console.log(process.env.NODE_ENV);
     let response = await fetch(this.baseUrl + "stations");
     let json = await response.json();
     let stationArray = json.stations;

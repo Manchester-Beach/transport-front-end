@@ -3,9 +3,9 @@ import Header from "../../components/Header/Header";
 import Clock from "../../components/Clock/Clock";
 import { JourneyType } from "../../utils/Types";
 import JourneyCardList from "../../components/JourneyCardList/JourneyCardList";
-import "./DashboardApp.css";
+import "./DashboardView.css";
 
-const DashboardApp : React.FC = () => {
+const DashboardView : React.FC = () => {
   const [journeys] = useState<JourneyType[]>([]);
   const [date, setDate] = useState(Date.now());
 
@@ -14,7 +14,7 @@ const DashboardApp : React.FC = () => {
   }
   
   return (
-    <div className="dashboard-app">
+    <div className="dashboard-view">
       <header className="dashboard-header">
         <Header text="Dashboard"/>
       </header>
@@ -26,4 +26,4 @@ const DashboardApp : React.FC = () => {
   );
 }
 
-export default DashboardApp;
+export default DashboardView;

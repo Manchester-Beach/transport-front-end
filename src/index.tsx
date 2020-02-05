@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './views/App/App';
-import DashboardApp from "./views/DashboardApp/DashboardApp";
+import DashboardView from "./views/DashboardView/DashboardView";
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import * as serviceWorker from './serviceWorker';
@@ -12,7 +12,7 @@ const routing = (
   <Router>
     <Switch>
       <Route path="/dashboard">
-        <DashboardApp />
+        <DashboardView />
       </Route>
       <Route path="/">
         <App />

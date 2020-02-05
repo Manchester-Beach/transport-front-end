@@ -14,7 +14,7 @@ class ApiService {
   }
   async getAllStations(): Promise<Array<Station>> {
     const env = runtimeEnv();
-    console.log(env.APP_ENV);
+    console.log(env.REACT_APP_ENV);
     let response = await fetch(this.baseUrl + "stations");
     let json = await response.json();
     let stationArray = json.stations;

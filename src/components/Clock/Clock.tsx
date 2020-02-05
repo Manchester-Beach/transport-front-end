@@ -12,7 +12,7 @@ const Clock : React.FC = () => {
 
   function updateTime(){
     const currentDate = new Date();
-    setCurrentTime(currentDate.toLocaleTimeString());
+    setCurrentTime(currentDate.toLocaleTimeString("en-GB"));
   }
 
   return (

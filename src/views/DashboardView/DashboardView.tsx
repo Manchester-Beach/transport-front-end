@@ -15,9 +15,6 @@ const DashboardView : React.FC = () => {
   
   return (
     <div className="dashboard-view">
-      <header className="dashboard-header">
-        <Header text="Dashboard"/>
-      </header>
       <div id="main">
         <Clock />
         <JourneyCardList refreshCards={refreshCards} journeys={journeys} key={date} onDashboard={true}/>

@@ -6,7 +6,7 @@ import JourneyCardList from "../JourneyCardList/JourneyCardList";
 import "./DashboardApp.css";
 
 const DashboardApp : React.FC = () => {
-  const [journeys, setJourneys] = useState<JourneyType[]>([]);
+  const [journeys] = useState<JourneyType[]>([]);
   const [date, setDate] = useState(Date.now());
 
   async function refreshCards(){

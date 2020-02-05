@@ -18,6 +18,7 @@ const JourneyCardList: React.FC<JourneyCardListProps> = (props) => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line 
   }, []);
 
   function displayJourneyCards(){

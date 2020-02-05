@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Header from "../Header/Header";
 import JourneyCardList from "../JourneyCardList/JourneyCardList";
 import JourneyForm from "../JourneyForm/JourneyForm";
@@ -7,7 +7,7 @@ import { JourneyType } from "../../utils/Types";
 
 const App: React.FC = () => {
 
-  const [journeys, setJourneys] = useState<JourneyType[]>([]);
+  const [journeys] = useState<JourneyType[]>([]);
   const [date, setDate] = useState(Date.now());
 
   async function refreshCards(){

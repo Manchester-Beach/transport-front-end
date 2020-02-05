@@ -11,11 +11,14 @@ const JourneyDashboardCard: React.FC<JourneyCardProps> = (props) => {
     setDate(Date.now());
   }
 
-  const [journeyService, setJourneyService] = useState(new JourneyCardService(props.journeyData, refreshData));
+  const [journeyService] = useState(new JourneyCardService(props.journeyData, refreshData));
+
+  // eslint-disable-next-line 
   const [date, setDate] = useState(Date.now());
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line 
   },[]);
 
   function fetchData() {

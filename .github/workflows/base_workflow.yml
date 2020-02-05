@@ -1,0 +1,17 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install deps
+      run: yarn install
+    - name: Unit Tests
+      run: CI=true yarn test
+    - name: Build app
+      run: yarn build

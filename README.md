@@ -12,3 +12,5 @@ This app displays train details to set locations.
 
 ## Push to production
 `git push heroku master`
+OR
+Navigate to 'Deploy' tab on Heroku scroll to 'Manual Deploy' section and click deploy branch.

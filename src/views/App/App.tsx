@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Header from "../Header/Header";
-import JourneyCardList from "../JourneyCardList/JourneyCardList";
-import JourneyForm from "../JourneyForm/JourneyForm";
+import Header from "../../components/Header/Header";
+import JourneyCardList from "../../components/JourneyCardList/JourneyCardList";
+import JourneyForm from "../../components/JourneyForm/JourneyForm";
 import "./App.css";
 import { JourneyType } from "../../utils/Types";
 

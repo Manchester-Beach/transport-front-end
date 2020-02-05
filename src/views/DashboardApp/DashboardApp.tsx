@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Header from "../Header/Header";
-import Clock from "../Clock/Clock";
+import Header from "../../components/Header/Header";
+import Clock from "../../components/Clock/Clock";
 import { JourneyType } from "../../utils/Types";
-import JourneyCardList from "../JourneyCardList/JourneyCardList";
+import JourneyCardList from "../../components/JourneyCardList/JourneyCardList";
 import "./DashboardApp.css";
 
 const DashboardApp : React.FC = () => {

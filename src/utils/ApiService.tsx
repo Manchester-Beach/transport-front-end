@@ -1,20 +1,12 @@
 import { Station } from "./Types";
 import Config from "../Config/config";
-import runtimeEnv from '@mars/heroku-js-runtime-env';
 
 class ApiService {
   baseUrl: string;
   constructor() {
-    if(Config.useProductionApi) {
-      this.baseUrl = Config.productionApiUrl;
-    }
-    else {
-      this.baseUrl = Config.localApiURL;
-    }
+    this.baseUrl = Config.getApiURL();
   }
   async getAllStations(): Promise<Array<Station>> {
-    const env = runtimeEnv();
-    console.log(env.REACT_APP_ENV);
     let response = await fetch(this.baseUrl + "stations");
     let json = await response.json();
     let stationArray = json.stations;

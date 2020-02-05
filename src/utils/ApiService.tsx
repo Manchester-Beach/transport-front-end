@@ -1,5 +1,6 @@
 import { Station } from "./Types";
 import Config from "../Config/config";
+import runtimeEnv from '@mars/heroku-js-runtime-env';
 
 class ApiService {
   baseUrl: string;
@@ -12,7 +13,8 @@ class ApiService {
     }
   }
   async getAllStations(): Promise<Array<Station>> {
-    console.log(process.env.APP_ENV);
+    const env = runtimeEnv();
+    console.log(env.APP_ENV);
     let response = await fetch(this.baseUrl + "stations");
     let json = await response.json();
     let stationArray = json.stations;

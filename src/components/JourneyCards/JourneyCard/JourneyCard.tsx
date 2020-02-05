@@ -3,6 +3,8 @@ import { Card } from "react-bootstrap";
 import "./JourneyCard.css";
 import { JourneyCardProps } from "../../../utils/Types";
 import JourneyCardService from "../JourneyCardService";
+import { IconButton } from "@material-ui/core";
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const JourneyCard: React.FC<JourneyCardProps> = (props) => {
 
@@ -39,6 +41,11 @@ const JourneyCard: React.FC<JourneyCardProps> = (props) => {
         </div>
         <div>
           Arrival:&nbsp;{journeyService.showArrivalTiming()}
+        </div>
+        <div onClick={props.parentCallback}>
+          <IconButton aria-label="delete" className="delete-button" size="small">
+            <DeleteIcon fontSize="small" />
+          </IconButton>
         </div>
       </Card>
     </div>

@@ -14,7 +14,8 @@ jobs:
     - name: Unit Tests
       run: CI=true yarn test
     - name: End2End Tests
-      run: yarn start & |
-      yarn run cypress run
+      run: |
+        yarn start &
+        yarn run cypress run
     - name: Build app
       run: yarn build

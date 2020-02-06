@@ -46,3 +46,7 @@
 .delete-button:focus{
   outline: 0;
 }
+
+.journey-error {
+  color: red;
+}

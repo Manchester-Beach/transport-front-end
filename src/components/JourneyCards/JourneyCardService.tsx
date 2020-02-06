@@ -3,6 +3,7 @@ import ApiService from "../../utils/ApiService";
 import { Card } from "react-bootstrap";
 import React from "react";
 import TrainIcon from '@material-ui/icons/Train';
+import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
 class JourneyCardService {
     journeyData : JourneyType;
@@ -13,13 +14,11 @@ class JourneyCardService {
     estimatedDeparture : String = "";
     arrivalTime : String = "";
     cancelled : boolean = false;
-
     nextTrain : String = "";
-
     refreshTimer : number = 0;
-
-
     refreshCallback : ()=>void;
+
+    errorMessage: string = "";
 
     constructor(journeyData : JourneyType, refreshCallback : ()=>void) {
         this.journeyData = journeyData;
@@ -29,25 +28,38 @@ class JourneyCardService {
 
     async fetchJourneyData() {
         console.log("Refreshing journey info at " + new Date().toLocaleTimeString());
-        fetch(this.apiService.generateFetchJourneyRequest(this.journeyData.originCrs, this.journeyData.destinationCrs)).then(
-            response => {
-                const data = response.json();
-                return JSON.stringify(data) == null ? null : data;
+        const response = await fetch(this.apiService.generateFetchJourneyRequest(this.journeyData.originCrs, this.journeyData.destinationCrs));
+        const jsonData = await response.json();
 
-            }
-            ).then(data =>
-            {
-                if(data["cancelled"]){
-                    this.fetchFurtherJourneys(1);
-                }
+        const data = JSON.stringify(jsonData) == null ? null : jsonData;
+        
+        if(data["status"] !== 200) {
+          console.log("Response message: "+ data["message"])
+          this.errorMessage = data["error"];
+        }
+        else {
+          if(data["cancelled"]){
+            this.fetchFurtherJourneys(1);
+          }
 
-                this.platform = data["platform"];
-                this.scheduledDeparture = data["scheduledDeparture"];
-                this.estimatedDeparture = data["expectedDeparture"];
-                this.arrivalTime = data["arrivalTime"];
-                this.cancelled = data["cancelled"]
-            }
-        ).then(()=>{this.refreshCallback();});
+          this.platform = data["platform"];
+          this.scheduledDeparture = data["scheduledDeparture"];
+          this.estimatedDeparture = data["expectedDeparture"];
+          this.arrivalTime = data["arrivalTime"];
+          this.cancelled = data["cancelled"]
+          
+        }
+        this.refreshCallback();
+    }
+
+    async processResponse(response: Response) {
+        if(JSON.stringify(response.json()))
+        {
+          return {status: response.status, body: response.json()};
+        }
+        else {
+          return null;
+        }
     }
 
     async fetchFurtherJourneys(journeyIndex: number){
@@ -72,17 +84,21 @@ class JourneyCardService {
       }
 
       showPlatform(): React.ReactNode {
-        return this.cancelled || this.scheduledDeparture === undefined ?
-          null : <div className="platform">Platform: {this.platform}</div>;
+        if(this.errorMessage === "" && !this.cancelled && this.scheduledDeparture !== undefined) {
+          return <div className="platform">Platform: {this.platform}</div>;
+        }
+        else {
+            return null;
+        }
       }
 
      showDepartureTiming() {
-        if(this.scheduledDeparture !== undefined) {
+        if(this.errorMessage === "") {
           return <div>{this.getDepartureTime(this.scheduledDeparture, this.estimatedDeparture, this.cancelled)}
-          </div>
+          <ArrowRightAltIcon fontSize="inherit"></ArrowRightAltIcon></div>
         }
         else {
-          return <div>No direct train available!</div>;
+        return <div className="journey-error">{this.errorMessage}</div>;
         }
       }
       
@@ -98,7 +114,7 @@ class JourneyCardService {
       }
 
       showArrivalTiming() {
-        if(this.scheduledDeparture !== undefined) {
+        if(this.errorMessage !== "") {
           if(this.cancelled) {
             return <span><i>{this.nextTrain}</i></span>
           }

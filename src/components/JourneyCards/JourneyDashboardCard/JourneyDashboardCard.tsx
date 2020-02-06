@@ -3,7 +3,7 @@ import { Card } from "react-bootstrap";
 import "../JourneyCard/JourneyCard.css";
 import { JourneyCardProps } from "../../../utils/Types";
 import JourneyCardService from "../JourneyCardService";
-import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+
 
 const JourneyDashboardCard: React.FC<JourneyCardProps> = (props) => {
 
@@ -38,7 +38,6 @@ const JourneyDashboardCard: React.FC<JourneyCardProps> = (props) => {
         </div>
         <div className="middle-row">
           {journeyService.showDepartureTiming()}
-          <ArrowRightAltIcon fontSize="inherit"></ArrowRightAltIcon>
           {journeyService.showArrivalTiming()}
         </div>
         <div>

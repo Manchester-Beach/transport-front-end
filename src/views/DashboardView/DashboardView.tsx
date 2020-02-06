@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Header from "../../components/Header/Header";
 import Clock from "../../components/Clock/Clock";
 import { JourneyType } from "../../utils/Types";
 import JourneyCardList from "../../components/JourneyCardList/JourneyCardList";

@@ -29,3 +29,7 @@ yarn-error.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
+
+#cypress
+cypress/videos
+cypress/screenshots

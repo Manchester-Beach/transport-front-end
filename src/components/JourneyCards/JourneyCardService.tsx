@@ -35,7 +35,7 @@ class JourneyCardService {
         
         if(data["status"] !== 200) {
           console.log("Response message: "+ data["message"])
-          this.errorMessage = data["error"];
+          this.errorMessage = "We're having trouble getting train times at the moment. Sorry :(";
         }
         else {
           if(data["cancelled"]){

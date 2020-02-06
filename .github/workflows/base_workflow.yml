@@ -13,5 +13,8 @@ jobs:
       run: yarn install
     - name: Unit Tests
       run: CI=true yarn test
+    - name: End2End Tests
+      run: yarn start &
+      run: yarn run cypress run
     - name: Build app
       run: yarn build

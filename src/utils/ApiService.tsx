@@ -1,7 +1,11 @@
 import { Station } from "./Types";
 import Config from "../Config/config";
 
-class ApiService {
+export interface IJourneyService {
+  getJourneyRequest(originCrs: string, destinationCrs: string): Promise<Response>;
+}
+
+class ApiService implements IJourneyService {
   baseUrl: string;
   constructor() {
     this.baseUrl = Config.getApiURL();
@@ -35,6 +39,10 @@ class ApiService {
 
   generateFetchJourneyRequest(originCrs?: String, destinationCrs? : String) : string {
     return this.baseUrl + "scheduledJourneys/" + originCrs + "/" + destinationCrs + "/0";
+  }
+
+  async getJourneyRequest(originCrs?: String, destinationCrs? : String): Promise<Response> {
+    return await fetch(this.baseUrl + "scheduledJourneys/" + originCrs + "/" + destinationCrs + "/0");
   }
 
   generateFutureJourneyFetchRequest(index: Number, originCrs?: String, destinationCrs? : String) : string{

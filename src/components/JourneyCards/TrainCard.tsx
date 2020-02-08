@@ -1,22 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from 'react-bootstrap';
+import TrainIcon from '@material-ui/icons/Train';
 import { IJourneyService} from "../../utils/ApiService"
+import { JourneyType } from "../../utils/Types";
 
-type NewCardProps = {
+type TrainCardProps = {
   apiService: IJourneyService;
+  journeyData : JourneyType;
 }
 
-const NewCard: React.FC<NewCardProps> = (props) => {
+const TrainCard: React.FC<TrainCardProps> = (props) => {
   const [originStation, setOriginStation] = useState();
+  const [destinationStation, setDestinationStation] = useState();
   const [errorState, setErrorState] = useState(false);
-   // destinationStation, scheduledDeparture, estimatedDeparture, arrivalTime] 
+   // scheduledDeparture, estimatedDeparture, arrivalTime] 
 
   async function updateInfo() {
-    //console.log("updateInfo")
-    let response = await props.apiService.getJourneyRequest("MCV", "LDS");
+    let response = await props.apiService.getJourneyRequest(props.journeyData.originCrs, props.journeyData.destinationCrs);
     if (response.status === 200) {
       const data = await response.json();
-      setOriginStation(data["originStation"].name)
+      setOriginStation(data["originStation"].name);
+      setDestinationStation(data["destinationStation"].name);
       setErrorState(false);
     } else {
       setErrorState(true);
@@ -29,7 +33,11 @@ const NewCard: React.FC<NewCardProps> = (props) => {
   }, []);
 
   function displayJourneyCard() {
-    return <Card className='journey-card journey-on-time' data-testid='journey-card'>{originStation}</Card>
+    return (
+      <Card className='journey-card journey-on-time' data-testid='journey-card'>
+        <Card.Title><TrainIcon fontSize='large'/>{originStation} - {destinationStation}</Card.Title>
+      </Card>
+    )
   }
 
   function displayError() {
@@ -43,4 +51,4 @@ const NewCard: React.FC<NewCardProps> = (props) => {
   )
 }
 
-export default NewCard;
+export default TrainCard;

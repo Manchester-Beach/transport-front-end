@@ -33,7 +33,7 @@ class JourneyCardService {
 
         const data = JSON.stringify(jsonData) == null ? null : jsonData;
         
-        if(data["status"] !== 200) {
+        if(data["status"] !== undefined) {
           console.log("Response message: "+ data["message"])
           this.errorMessage = "We're having trouble getting train times at the moment. Sorry :(";
         }
@@ -114,7 +114,7 @@ class JourneyCardService {
       }
 
       showArrivalTiming() {
-        if(this.errorMessage !== "") {
+        if(this.errorMessage.length <=0) {
           if(this.cancelled) {
             return <span><i>{this.nextTrain}</i></span>
           }
@@ -123,7 +123,7 @@ class JourneyCardService {
           }
         }
         else {
-          return null
+        return null
         }
       }
       

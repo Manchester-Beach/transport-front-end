@@ -26,8 +26,8 @@ const JourneyCardList: React.FC<JourneyCardListProps> = (props) => {
     return (
       journeys.map((j, i) => {
         if(props.onDashboard) {
-          return <JourneyDashboardCard key={i} journeyData={j} parentCallback={() => handleChildClick(i)}/>
-          //return <TrainCard key={i} apiService={new ApiService()} journeyData={j}/>
+          //return <JourneyDashboardCard key={i} journeyData={j} parentCallback={() => handleChildClick(i)}/>
+          return <TrainCard key={i} apiService={new ApiService()} journeyData={j}/>
         }
         else {
           return <JourneyCard key={i} journeyData={j} parentCallback={() => handleChildClick(i)}/>

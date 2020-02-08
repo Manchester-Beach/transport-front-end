@@ -50,12 +50,17 @@ it('should display a journey when returned from the API', async () => {
   });
   expect(container.querySelector('.card-title').textContent).toBe('Manchester Victoria - Leeds');
   expect(container.querySelector('.card-title>svg')).toBeInTheDocument();
+  expect(container.querySelector('[data-testid=departureTime]').textContent).toBe('16:45');
+  expect(container.querySelector('[data-testid=arrivalTime]').textContent).toBe(mockResponseBody.arrivalTime);
+
 })
 
 it('should display a different journey when returned from the API', async () => {
   const mockResponseBody = {
     originStation: {name: "Manchester Piccadilly", lat: 0, lon: 0, crs: "MAN"},
-    destinationStation: {name: "London Euston", lat: 0, lon: 0, crs: "EUS"}
+    destinationStation: {name: "London Euston", lat: 0, lon: 0, crs: "EUS"},
+    scheduledDeparture: "16:20",
+    arrivalTime: "18:22"
   }
   jest.spyOn(global, 'fetch').mockImplementation(() => {
     return new Response(JSON.stringify(mockResponseBody), {status: 200});
@@ -64,4 +69,6 @@ it('should display a different journey when returned from the API', async () => 
     render(<TrainCard apiService={new ApiService()} journeyData={new JourneyType('','','','')}/>, container);
   });
   expect(container.querySelector('.card-title').textContent).toBe('Manchester Piccadilly - London Euston');
+  expect(container.querySelector('[data-testid=departureTime]').textContent).toBe('16:20');
+  expect(container.querySelector('[data-testid=arrivalTime]').textContent).toBe(mockResponseBody.arrivalTime);
 })

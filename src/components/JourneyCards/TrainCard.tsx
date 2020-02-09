@@ -15,8 +15,10 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
   const [destinationStation, setDestinationStation] = useState();
   const [scheduledDeparture, setScheduledDeparture] = useState();
   const [arrivalTime, setArrivalTime] = useState();
+  const [estimatedDeparture, setEstimatedDeparture] = useState();
+  const [cancelled, setCancelled] = useState(false);
   const [errorState, setErrorState] = useState(false);
-   // scheduledDeparture, estimatedDeparture, ] 
+   // scheduledDeparture, , ] 
 
   async function updateInfo() {
     let response = await props.apiService.getJourneyRequest(props.journeyData.originCrs, props.journeyData.destinationCrs);
@@ -26,6 +28,8 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
       setDestinationStation(data["destinationStation"].name);
       setScheduledDeparture(data["scheduledDeparture"]);
       setArrivalTime(data["arrivalTime"]);
+      setEstimatedDeparture(data["expectedDeparture"]);
+      setCancelled(data["cancelled"]);
       setErrorState(false);
     } else {
       setErrorState(true);
@@ -37,17 +41,39 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
     updateInfo(); 
   }, []);
 
+  const journeyCardClassNames = scheduledDeparture === estimatedDeparture ? "journey-card journey-on-time" : "journey-card journey-late";
+
   function displayJourneyCard() {
     return (
-      <Card className='journey-card journey-on-time' data-testid='journey-card'>
+      <Card className={journeyCardClassNames} data-testid='journey-card'>
         <Card.Title><TrainIcon fontSize='large'/>{originStation} - {destinationStation}</Card.Title>
         <div data-testid='departureDetails'>
-          <span data-testid='departureTime'>{scheduledDeparture}</span>
+          {getDepartureTime()}
           <ArrowRightAltIcon fontSize="inherit"></ArrowRightAltIcon>
-          <span data-testid='arrivalTime'>{arrivalTime}</span>
+          <span data-testid='arrivalTime'>{arrivalTime}</span> 
         </div>
       </Card>
     )
+  }
+
+  function getDepartureTime(){
+    if (cancelled){
+      return (
+        <span>
+          <span data-testid='departureTime' style={{textDecorationLine:"line-through"}}>{scheduledDeparture}</span>
+          <span data-testid='cancelled' style={{color: "red"}}> Cancelled</span>
+        </span>
+      );
+    } else if (scheduledDeparture !== estimatedDeparture){
+      return (
+        <span>
+          <span data-testid='departureTime' style={{textDecorationLine:"line-through"}}>{scheduledDeparture}</span>
+          <span data-testid='expectedDeparture' style={{color: "red"}}> {estimatedDeparture} (train is late)</span>
+        </span>
+      );
+    } else { 
+      return <span data-testid='departureTime'>{scheduledDeparture}</span>
+    }
   }
 
   function displayError() {

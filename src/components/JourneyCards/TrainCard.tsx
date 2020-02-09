@@ -18,7 +18,6 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
   const [estimatedDeparture, setEstimatedDeparture] = useState();
   const [cancelled, setCancelled] = useState(false);
   const [errorState, setErrorState] = useState(false);
-   // scheduledDeparture, , ] 
 
   async function updateInfo() {
     let response = await props.apiService.getJourneyRequest(props.journeyData.originCrs, props.journeyData.destinationCrs);
@@ -50,7 +49,7 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
         <div data-testid='departureDetails'>
           {getDepartureTime()}
           <ArrowRightAltIcon fontSize="inherit"></ArrowRightAltIcon>
-          <span data-testid='arrivalTime'>{arrivalTime}</span> 
+          {cancelled ? null : <span data-testid='arrivalTime'>{arrivalTime}</span> }
         </div>
       </Card>
     )

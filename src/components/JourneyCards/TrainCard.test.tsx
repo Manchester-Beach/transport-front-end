@@ -89,7 +89,8 @@ it('should show when a train is cancelled', async () => {
   jest.spyOn(global, 'fetch').mockImplementation(() => {
     return new Response(JSON.stringify(mockResponseBody), {status: 200});
   });
-  const {getByText} = render(<TrainCard apiService={new ApiService()} journeyData={new JourneyType('','','','')}/>);
+  const {getByText, queryByText} = render(<TrainCard apiService={new ApiService()} journeyData={new JourneyType('','','','')}/>);
   await wait(() => {});
   expect(getByText("Cancelled")).toHaveStyle('color: red');
+  expect(queryByText(mockResponseBody.arrivalTime)).not.toBeInTheDocument();
 });

@@ -21,5 +21,5 @@ it('displays a journey', () => {
   cy.visit('/dashboard')
   cy.get('.journey-dashboard-card-div').should('be.visible')
   cy.contains('Manchester Piccadilly - London Euston', { timeout: 10000 })
-  //cy.get('[data-testid="departureDetails"]').should('be.visible')
+  cy.get('[data-testid="departureDetails"]').should('be.visible')
 })

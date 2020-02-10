@@ -103,7 +103,13 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
 
   function getArrivalTime(){
     if (cancelled){
-      return <span>Next train is at {nextTrainDeparture} on platform {nextTrainPlatform}</span>;
+      if (nextTrainDeparture !== undefined){
+        if (nextTrainPlatform !== "") {
+          return <span><i>Next train is at {nextTrainDeparture} from platform {nextTrainPlatform}</i></span>;
+        } else {
+          return <span><i>Next train is at {nextTrainDeparture}</i></span>;
+        }
+      }
     } else {
       return <span data-testid='arrivalTime'>{arrivalTime}</span>;
     }

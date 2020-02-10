@@ -7,19 +7,20 @@
 	padding: 10px;
     margin: 10px 40px 10px 40px;
 	border-right-width: 1vw;
-	font-size: 1vw;
 }
 
 .tram-destination {
-	width: 50%;
+	width: 75%;
 	float: left;
 }
 
 .tram-departure {
-	width: 50%;
+	width: 25%;
 	float: right;
+	text-align: right;
 }
 
 .tram-header {
 	margin-bottom: .75rem;
+	font-weight: 500;
 }

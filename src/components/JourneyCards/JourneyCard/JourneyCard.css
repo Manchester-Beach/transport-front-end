@@ -21,12 +21,12 @@
 }
 
 .journey-dashboard-card-div{
-  flex: 0 50%;
+  flex: 0 100%;
   color: black;
 }
 
 .journey-dashboard-card-div div{
-  font-size: 1vw;
+  font-size: 2vw;
 }
 
 .title-div{

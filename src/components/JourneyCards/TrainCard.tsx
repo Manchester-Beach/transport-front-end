@@ -61,6 +61,7 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
 
   useEffect(() => {
     updateInfo(); 
+    // eslint-disable-next-line
   }, []);
 
   const journeyCardClassNames = scheduledDeparture === estimatedDeparture ? "journey-card journey-on-time" : "journey-card journey-late";

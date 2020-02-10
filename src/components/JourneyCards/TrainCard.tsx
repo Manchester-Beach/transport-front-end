@@ -17,11 +17,13 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
   const [arrivalTime, setArrivalTime] = useState();
   const [estimatedDeparture, setEstimatedDeparture] = useState();
   const [platform, setPlatform] = useState();
+  const [nextTrainDeparture, setNextTrainDeparture] = useState();
+  const [nextTrainPlatform, setNextTrainPlatform] = useState();
   const [cancelled, setCancelled] = useState(false);
   const [errorState, setErrorState] = useState(false);
 
   async function updateInfo() {
-    let response = await props.apiService.getJourneyRequest(props.journeyData.originCrs, props.journeyData.destinationCrs);
+    let response = await props.apiService.getJourneyRequest(props.journeyData.originCrs, props.journeyData.destinationCrs, 0);
     if (response.status === 200) {
       const data = await response.json();
       setOriginStation(data["originStation"].name);
@@ -32,10 +34,29 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
       setPlatform(data["platform"]);
       setCancelled(data["cancelled"]);
       setErrorState(false);
+      if ( data["cancelled"]) {
+        getNextTrain(1);
+      }
     } else {
       setErrorState(true);
     }
     setTimeout(updateInfo, 10000);
+  }
+
+  async function getNextTrain(journeyIndex: number) {
+    let response = await props.apiService.getJourneyRequest(props.journeyData.originCrs, props.journeyData.destinationCrs, journeyIndex);
+    if (response.status === 200) {
+      const data = await response.json();
+      if (data["cancelled"]){
+        journeyIndex ++; 
+        getNextTrain(journeyIndex);
+      } else {
+        setNextTrainDeparture(data["scheduledDeparture"]);
+        setNextTrainPlatform(data["platform"]);
+      }
+    } else {
+      setErrorState(true);
+    }
   }
 
   useEffect(() => {
@@ -54,7 +75,7 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
         <div data-testid='departureDetails'>
           {getDepartureTime()}
           <ArrowRightAltIcon fontSize="inherit"></ArrowRightAltIcon>
-          {cancelled ? null : <span data-testid='arrivalTime'>{arrivalTime}</span> }
+          {getArrivalTime()}
         </div>
       </Card>
     )
@@ -77,6 +98,14 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
       );
     } else { 
       return <span data-testid='departureTime'>{scheduledDeparture}</span>
+    }
+  }
+
+  function getArrivalTime(){
+    if (cancelled){
+      return <span>Next train is at {nextTrainDeparture} on platform {nextTrainPlatform}</span>;
+    } else {
+      return <span data-testid='arrivalTime'>{arrivalTime}</span>;
     }
   }
 

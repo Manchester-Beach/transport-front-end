@@ -18,7 +18,7 @@ const DashboardView : React.FC = () => {
       <div id="main">
         <Clock />
         <JourneyCardList refreshCards={refreshCards} journeys={journeys} key={date} onDashboard={true}/>
-        <TramDepartureCard/>
+        <TramDepartureCard stationID="9400ZZMASHU"/>
       </div>
     </div>
   );

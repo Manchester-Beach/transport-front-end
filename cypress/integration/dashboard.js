@@ -17,9 +17,16 @@ it('displays a clock', () => {
   cy.get('.clock-div').should('be.visible')
 })
 
-it('displays a journey', () => {
+it('displays a train journey', () => {
   cy.visit('/dashboard')
   cy.get('.journey-dashboard-card-div').should('be.visible')
   cy.contains('Manchester Piccadilly - London Euston', { timeout: 10000 })
   cy.get('[data-testid="departureDetails"]').should('be.visible')
+})
+
+it('displays a tram journey', () => {
+  cy.visit('/dashboard')
+  cy.get('.tram-card-div').should('be.visible')
+  cy.contains('Shudehill', { timeout: 10000 })
+  cy.get('[data-testid="tram-card"]').should('be.visible')
 })

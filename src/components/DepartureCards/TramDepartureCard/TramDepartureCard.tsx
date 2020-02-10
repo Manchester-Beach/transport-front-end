@@ -58,7 +58,7 @@ const TramDepartureCard: React.FC<TramDepartureProps> = (props) => {
 
 	return(
 		<div className="tram-card-div">
-			<Card className="tram-card">
+			<Card className="tram-card" data-testid='tram-card'>
 				<div className="tram-header"><TramIcon fontSize="large"></TramIcon>Shudehill</div>
 				<div>{formatDepartures()}</div>
 			</Card>

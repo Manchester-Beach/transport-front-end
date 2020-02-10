@@ -1,3 +1,4 @@
+![CI](https://github.com/Manchester-Beach/transport-front-end/workflows/CI/badge.svg)
 # transport-front-end
 This app displays train details to set locations.
 

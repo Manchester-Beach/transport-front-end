@@ -3,6 +3,7 @@ import { Card } from "react-bootstrap";
 import "./TramDepartureCard.css"
 import { TramDeparture } from "../../../utils/Types";
 import TramAPIService from '../../../utils/TramAPIService';
+import TramIcon from '@material-ui/icons/Tram';
 
 interface TramDepartureProps {
 	stationID: string;
@@ -22,8 +23,8 @@ const TramDepartureCard: React.FC<TramDepartureProps> = (props) => {
 				departures.map((departure, index) => {
 					return (
 					<div key={index}>
-						<div>{departure.destination}</div> 
-						<div>{departure.timeUntilDeparture} Mins</div>
+						<div className="tram-destination">{departure.destination}</div> 
+						<div className="tram-departure">{departure.timeUntilDeparture} Mins</div>
 					</div>
 					)
 				})
@@ -55,9 +56,9 @@ const TramDepartureCard: React.FC<TramDepartureProps> = (props) => {
 	}, []);
 
 	return(
-		<div>
+		<div className="tram-card-div">
 			<Card className="tram-card">
-				<div>Shudehill</div>
+				<div className="tram-header h5"><TramIcon fontSize="large"></TramIcon>Shudehill</div>
 				<div>{formatDepartures()}</div>
 			</Card>
 		</div>

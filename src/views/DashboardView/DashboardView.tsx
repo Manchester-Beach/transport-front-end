@@ -3,6 +3,7 @@ import Clock from "../../components/Clock/Clock";
 import { JourneyType } from "../../utils/Types";
 import JourneyCardList from "../../components/JourneyCardList/JourneyCardList";
 import "./DashboardView.css";
+import TramDepartureCard from "../../components/DepartureCards/TramDepartureCard/TramDepartureCard";
 
 const DashboardView : React.FC = () => {
   const [journeys] = useState<JourneyType[]>([]);
@@ -17,6 +18,7 @@ const DashboardView : React.FC = () => {
       <div id="main">
         <Clock />
         <JourneyCardList refreshCards={refreshCards} journeys={journeys} key={date} onDashboard={true}/>
+        <TramDepartureCard/>
       </div>
     </div>
   );

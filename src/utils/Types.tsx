@@ -1,3 +1,8 @@
+export interface TramDeparture {
+  destination: string;
+  timeUntilDeparture: number;
+}
+
 export interface Station {
   name: string;
   crs: string;

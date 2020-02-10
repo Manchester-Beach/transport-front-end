@@ -48,6 +48,7 @@ const TramDepartureCard: React.FC<TramDepartureProps> = (props) => {
 			console.log(departures)
 			setDepartures(departures);
 		}
+		setTimeout(getDepartures, 10000);
 	}
 
 	useEffect(() => {

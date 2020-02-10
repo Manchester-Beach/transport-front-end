@@ -35,6 +35,7 @@ it('should display a journey when returned from the API', async () => {
   expect(getByText(mockResponseBody.scheduledDeparture)).toBeInTheDocument();
   expect(getByText(mockResponseBody.scheduledDeparture)).not.toHaveStyle('text-decoration-line: line-through');
   expect(getByText(mockResponseBody.arrivalTime)).toBeInTheDocument();
+  expect(getByText("Platform: " + mockResponseBody.platform)).toBeInTheDocument();
   expect(container.querySelector('[data-testid=journey-card]')).toHaveClass('journey-on-time');
 });
 

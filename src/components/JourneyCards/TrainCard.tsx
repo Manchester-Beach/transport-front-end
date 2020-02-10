@@ -16,6 +16,7 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
   const [scheduledDeparture, setScheduledDeparture] = useState();
   const [arrivalTime, setArrivalTime] = useState();
   const [estimatedDeparture, setEstimatedDeparture] = useState();
+  const [platform, setPlatform] = useState();
   const [cancelled, setCancelled] = useState(false);
   const [errorState, setErrorState] = useState(false);
 
@@ -28,6 +29,7 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
       setScheduledDeparture(data["scheduledDeparture"]);
       setArrivalTime(data["arrivalTime"]);
       setEstimatedDeparture(data["expectedDeparture"]);
+      setPlatform(data["platform"]);
       setCancelled(data["cancelled"]);
       setErrorState(false);
     } else {
@@ -45,7 +47,10 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
   function displayJourneyCard() {
     return (
       <Card className={journeyCardClassNames} data-testid='journey-card'>
-        <Card.Title><TrainIcon fontSize='large'/>{originStation} - {destinationStation}</Card.Title>
+        <div className='title-div' data-testid='journeyDetails'>
+          <Card.Title><TrainIcon fontSize='large'/>{originStation} - {destinationStation}</Card.Title>
+          <div className="platform">Platform: {platform}</div>
+        </div>
         <div data-testid='departureDetails'>
           {getDepartureTime()}
           <ArrowRightAltIcon fontSize="inherit"></ArrowRightAltIcon>

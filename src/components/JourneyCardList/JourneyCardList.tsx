@@ -4,6 +4,7 @@ import "./JourneyCardList.css";
 import ApiService from "../../utils/ApiService";
 import {JourneyType} from "../../utils/Types";
 import JourneyDashboardCard from "../JourneyCards/JourneyDashboardCard/JourneyDashboardCard";
+import TrainCard from "../JourneyCards/TrainCard";
 
 type JourneyCardListProps = {
   refreshCards : () => void,
@@ -26,6 +27,7 @@ const JourneyCardList: React.FC<JourneyCardListProps> = (props) => {
       journeys.map((j, i) => {
         if(props.onDashboard) {
           return <JourneyDashboardCard key={i} journeyData={j} parentCallback={() => handleChildClick(i)}/>
+          //return <TrainCard key={i} apiService={new ApiService()} journeyData={j}/>
         }
         else {
           return <JourneyCard key={i} journeyData={j} parentCallback={() => handleChildClick(i)}/>

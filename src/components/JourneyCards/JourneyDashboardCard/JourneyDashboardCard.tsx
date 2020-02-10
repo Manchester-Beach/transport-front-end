@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { Card } from "react-bootstrap";
 import "../JourneyCard/JourneyCard.css";
 import { JourneyCardProps } from "../../../utils/Types";
-import JourneyCardService from "../JourneyCardService";
+import JourneyCardService from "../JourneyCardService";	
 
 
 const JourneyDashboardCard: React.FC<JourneyCardProps> = (props) => {

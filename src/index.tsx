@@ -5,6 +5,7 @@ import './index.css';
 import App from './views/App/App';
 import DashboardView from "./views/DashboardView/DashboardView";
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import {Redirect} from 'react-router-dom'
 
 import * as serviceWorker from './serviceWorker';
 
@@ -14,9 +15,10 @@ const routing = (
       <Route path="/dashboard">
         <DashboardView />
       </Route>
-      <Route path="/">
+      <Route path="/admin">
         <App />
       </Route>
+    <Redirect from='/' to='/dashboard' />
     </Switch>
     </Router>
     );

@@ -45,7 +45,6 @@ const TramDepartureCard: React.FC<TramDepartureProps> = (props) => {
 		
 			var departures: Array<TramDeparture> = JSON.parse(JSON.stringify(departuresArray));
 			
-			console.log(departures)
 			setDepartures(departures);
 		}
 		setTimeout(getDepartures, 10000);

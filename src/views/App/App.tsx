@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Header from "../../components/Header/Header";
-import JourneyCardList from "../../components/JourneyCardList/JourneyCardList";
 import JourneyForm from "../../components/JourneyForm/JourneyForm";
 import "./App.css";
-import { JourneyType } from "../../utils/Types";
+import AdminTrainList from "../../components/AdminTrainList/AdminTrainList";
+import ApiService from "../../utils/ApiService";
 
 const App: React.FC = () => {
 
-  const [journeys] = useState<JourneyType[]>([]);
+  // eslint-disable-next-line
   const [date, setDate] = useState(Date.now());
 
   async function refreshCards(){
@@ -21,7 +21,8 @@ const App: React.FC = () => {
       </header>
       <div id="main">
         <JourneyForm refreshPage={refreshCards} />
-        <JourneyCardList refreshCards={refreshCards} journeys={journeys} key={date} onDashboard={false}/>
+        <AdminTrainList apiService={new ApiService()} />
+        {/* <JourneyCardList refreshCards={refreshCards} journeys={journeys} key={date} onDashboard={false}/> */}
       </div>
     </div>
   );

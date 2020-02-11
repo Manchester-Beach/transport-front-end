@@ -33,6 +33,10 @@ class ApiService implements IJourneyService {
     console.log("Response", response.status);
   }
 
+  async getAllJourneys(): Promise<Response> {
+    return await fetch(this.baseUrl + "journeys");
+  }
+
   getBaseUrl() : string{
     return this.baseUrl;
   }

@@ -16,8 +16,11 @@ it('should display an error when an error is returned from the API', async () =>
   spy.mockImplementation(() => {
     return new Response("Error", {status: 500})
   })
-  const { getByText } = render(<TrainCard apiService={new ApiService()} journeyData={new JourneyType('','','','')}/>)
-  await wait(() => expect(getByText("We're having trouble getting train times at the moment. Sorry :(")).toBeInTheDocument());
+  const { getByText } = render(<TrainCard apiService={new ApiService()} journeyData={new JourneyType('MCV', 'EUS', 'Manchester Victoria', 'London Euston')}/>)
+  await wait(() => {})
+  expect(getByText("Manchester Victoria - London Euston")).toBeInTheDocument();
+  expect(getByText(/We're having trouble getting train times at the moment/)).toBeInTheDocument();
+  expect(getByText(/We're having trouble getting train times at the moment/)).toHaveStyle('color: red');
 });
 
 it('should display a journey when returned from the API', async () => {

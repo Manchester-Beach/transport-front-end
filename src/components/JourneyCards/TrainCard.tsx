@@ -117,7 +117,14 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
   }
 
   function displayError() {
-    return <Card className='journey-card journey-late' data-testid='journey-error'>We're having trouble getting train times at the moment. Sorry :(</Card>
+    return (
+      <Card className='journey-card journey-late' data-testid='journey-error'>
+        <div className='title-div' data-testid='journeyDetails'>
+          <Card.Title><TrainIcon fontSize='large'/>{props.journeyData.originStation} - {props.journeyData.destinationStation}</Card.Title>
+        </div>
+        <div style={{color: "red"}}>We're having trouble getting train times at the moment.<br/>Sorry :(</div>  
+      </Card>
+    )
   }
 
   return (

@@ -1,0 +1,14 @@
+.delete-button {
+    display: inline-block;
+}
+
+.station-names {
+    display: inline-block;
+    padding-left: 15px;
+    margin-left: auto;
+}
+
+.journey-details {
+    text-align: left;
+    padding-left: 3%;
+}

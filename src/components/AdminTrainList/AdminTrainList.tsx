@@ -3,6 +3,7 @@ import ApiService, { IJourneyService } from '../../utils/ApiService';
 import { JourneyType } from '../../utils/Types';
 import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import "./AdminTrainList.css"
 
 type AdminTrainListProps = {
     apiService: IJourneyService;
@@ -22,13 +23,11 @@ type AdminTrainListProps = {
       
         return (
         journeys.map((j, i) => {
-        return (<div key={i}>
-          <div>{j.originStation} -  {j.destinationStation}</div>
-          <div onClick={()=>{deleteJourney(i)}}>
-          <IconButton aria-label="delete" className="delete-button" size="small">
+        return (<div className="journey-details" key={i}>
+          <div className="station-names">{j.originStation} -  {j.destinationStation}</div>
+          <IconButton onClick={()=>{deleteJourney(i)}} aria-label="delete" className="delete-button" size="small">
             <DeleteIcon fontSize="small" />
           </IconButton>
-        </div>
           </div>);
         })
       );
@@ -56,6 +55,6 @@ type AdminTrainListProps = {
       console.log("Removed journey " + index)
     }
 
-    return <div className="journey-list">{displayJourneyCards()}</div>;
+    return <div className="journey-admin-list">{displayJourneyCards()}</div>;
   }
   export default AdminTrainList;

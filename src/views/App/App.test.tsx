@@ -4,6 +4,6 @@ import App from './App';
 
 test('renders header', () => {
   const { getByText } = render(<App />);
-  const headerText = getByText("Transport");
+  const headerText = getByText("Admin");
   expect(headerText).toBeInTheDocument();
 });

@@ -90,11 +90,11 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
           <span data-testid='cancelled' style={{color: "red"}}> Cancelled</span>
         </span>
       );
-    } else if (scheduledDeparture !== estimatedDeparture){
+    } else if (scheduledDeparture !== estimatedDeparture && estimatedDeparture !== undefined){
       return (
         <span>
           <span data-testid='departureTime' style={{textDecorationLine:"line-through"}}>{scheduledDeparture}</span>
-          <span data-testid='expectedDeparture' style={{color: "red"}}> {estimatedDeparture} (train is late)</span>
+          <span data-testid='expectedDeparture' style={{color: "red"}}> {estimatedDeparture.startsWith("-") ? null : estimatedDeparture} (train is late)</span>
         </span>
       );
     } else { 

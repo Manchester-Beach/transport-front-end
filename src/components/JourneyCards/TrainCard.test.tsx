@@ -82,6 +82,26 @@ it('should show when a train is delayed', async () => {
   expect(container.querySelector('[data-testid=journey-card]')).toHaveClass('journey-late');
 });
 
+it('should not display an invalid expected departure time', async () => {
+  const mockResponseBody = {
+    originStation: {name: "Manchester Victoria", lat: 0, lon: 0, crs: "MCV"},
+    destinationStation: {name: "Leeds", lat: 0, lon: 0, crs: "LDS"},
+    platform: "4",
+    scheduledDeparture: "18:30",
+    expectedDeparture: "-1:59",
+    arrivalTime: "19:21",
+    cancelled: false
+  }
+  spy.mockImplementation(() => {
+    return new Response(JSON.stringify(mockResponseBody), {status: 200});
+  });
+  const {queryByText, getByText} = render(<TrainCard apiService={new ApiService()} journeyData={new JourneyType('','','','')}/>);
+  await wait(() => {});
+  expect(getByText(mockResponseBody.scheduledDeparture)).toHaveStyle('text-decoration-line: line-through');
+  expect(getByText(/(train is late)/)).toHaveStyle('color: red');
+  expect(queryByText(/-1:59/)).not.toBeInTheDocument();
+});
+
 it('should show when a train is cancelled', async () => {
   const mockCancelledResponseBody = {
     originStation: {name: "Manchester Victoria", lat: 0, lon: 0, crs: "MCV"},

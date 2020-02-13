@@ -3,44 +3,44 @@ import TrainCard from "./TrainCard";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 
 type TrainServiceDetailsProps = {
-    journeyData: {
-        scheduledDepartureTime: string;
-        expectedDepartureTime: string;
-        arrivalTime: string;
-        platform: string;
-        cancelled: boolean;
-    };
+  serviceData: {
+    scheduledDepartureTime: string;
+    expectedDepartureTime: string;
+    arrivalTime: string;
+    platform: string;
+    cancelled: boolean;
+  };
 }
 
 const TrainServiceDetails: React.FC <TrainServiceDetailsProps> = (props) =>{
 
     function getDepartureTime() {
-      if (props.journeyData.cancelled) {
+      if (props.serviceData.cancelled) {
         return (
           <span>
-            <span style={{textDecorationLine:"line-through"}}>{props.journeyData.scheduledDepartureTime}</span>
-            <span style={{color:"red"}}>Cancelled</span>
+            <span style={{textDecorationLine:"line-through"}}>{props.serviceData.scheduledDepartureTime}</span>
+            <span style={{color:"red"}}> Cancelled</span>
           </span>
         )
-      } else if (props.journeyData.expectedDepartureTime !== undefined && props.journeyData.expectedDepartureTime !== props.journeyData.scheduledDepartureTime) {
+      } else if (props.serviceData.expectedDepartureTime !== undefined && props.serviceData.expectedDepartureTime !== props.serviceData.scheduledDepartureTime) {
         return (
           <span>
-            <span style={{textDecorationLine:"line-through"}}>{props.journeyData.scheduledDepartureTime}</span>
-            <span style={{color:"red"}}>{props.journeyData.expectedDepartureTime.startsWith('-') ? null : props.journeyData.expectedDepartureTime}</span>
+            <span style={{textDecorationLine:"line-through"}}>{props.serviceData.scheduledDepartureTime}</span>
+            <span style={{color:"red"}}> {props.serviceData.expectedDepartureTime.startsWith('-') ? "Delayed" : props.serviceData.expectedDepartureTime}</span>
           </span>
         )
       } else {
-        return <span>{props.journeyData.scheduledDepartureTime}</span>
+        return <span>{props.serviceData.scheduledDepartureTime}</span>
       }
     }
 
     function getArrivalTime() {
-      if (! props.journeyData.cancelled) {
+      if (! props.serviceData.cancelled) {
         return (
           <span>
             <ArrowRightAltIcon fontSize="inherit"></ArrowRightAltIcon>
-            <span>{props.journeyData.arrivalTime}</span>
-            {props.journeyData.platform === "" ? null : <span style={{color: "blue", float: "right"}}>Platform: {props.journeyData.platform}</span>}
+            <span>{props.serviceData.arrivalTime}</span>
+            {props.serviceData.platform === "" ? null : <span style={{color: "blue", float: "right"}}>Platform: {props.serviceData.platform}</span>}
           </span>
         )
       } else {

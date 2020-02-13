@@ -4,6 +4,7 @@ import TrainIcon from '@material-ui/icons/Train';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import { IJourneyService} from "../../utils/ApiService"
 import { JourneyType } from "../../utils/Types";
+import TrainServiceDetails from "./TrainServiceDetails";
 
 type TrainCardProps = {
   apiService: IJourneyService;
@@ -11,52 +12,27 @@ type TrainCardProps = {
 }
 
 const TrainCard: React.FC<TrainCardProps> = (props) => {
-  const [originStation, setOriginStation] = useState();
-  const [destinationStation, setDestinationStation] = useState();
-  const [scheduledDeparture, setScheduledDeparture] = useState();
-  const [arrivalTime, setArrivalTime] = useState();
-  const [estimatedDeparture, setEstimatedDeparture] = useState();
-  const [platform, setPlatform] = useState();
-  const [nextTrainDeparture, setNextTrainDeparture] = useState();
-  const [nextTrainPlatform, setNextTrainPlatform] = useState();
-  const [cancelled, setCancelled] = useState(false);
   const [errorState, setErrorState] = useState(false);
+  const [serviceData, setServiceData] = useState();
 
   async function updateInfo() {
     let response = await props.apiService.getJourneyRequest(props.journeyData.originCrs, props.journeyData.destinationCrs, 0);
     if (response.status === 200) {
       const data = await response.json();
-      setOriginStation(data["originStation"].name);
-      setDestinationStation(data["destinationStation"].name);
-      setScheduledDeparture(data["scheduledDeparture"]);
-      setArrivalTime(data["arrivalTime"]);
-      setEstimatedDeparture(data["expectedDeparture"]);
-      setPlatform(data["platform"]);
-      setCancelled(data["cancelled"]);
       setErrorState(false);
-      if ( data["cancelled"]) {
-        getNextTrain(1);
-      }
+
+      setServiceData({
+        scheduledDepartureTime: data["scheduledDeparture"],
+        expectedDepartureTime: data["expectedDeparture"],
+        arrivalTime: data["arrivalTime"],
+        platform: data["platform"],
+        cancelled: data["cancelled"]
+      })
+
     } else {
       setErrorState(true);
     }
     setTimeout(updateInfo, 10000);
-  }
-
-  async function getNextTrain(journeyIndex: number) {
-    let response = await props.apiService.getJourneyRequest(props.journeyData.originCrs, props.journeyData.destinationCrs, journeyIndex);
-    if (response.status === 200) {
-      const data = await response.json();
-      if (data["cancelled"]){
-        journeyIndex ++; 
-        getNextTrain(journeyIndex);
-      } else {
-        setNextTrainDeparture(data["scheduledDeparture"]);
-        setNextTrainPlatform(data["platform"]);
-      }
-    } else {
-      setErrorState(true);
-    }
   }
 
   useEffect(() => {
@@ -64,72 +40,26 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
     // eslint-disable-next-line
   }, []);
 
-  const journeyCardClassNames = scheduledDeparture === estimatedDeparture ? "journey-card journey-on-time" : "journey-card journey-late";
-
   function displayJourneyCard() {
     return (
-      <Card className={journeyCardClassNames} data-testid='journey-card'>
-        <div className='title-div' data-testid='journeyDetails'>
-          <Card.Title><TrainIcon fontSize='large'/>{originStation} - {destinationStation}</Card.Title>
-          <div className="platform">Platform: {platform}</div>
-        </div>
-        <div data-testid='departureDetails'>
-          {getDepartureTime()}
-          <ArrowRightAltIcon fontSize="inherit"></ArrowRightAltIcon>
-          {getArrivalTime()}
-        </div>
-      </Card>
+      serviceData === undefined ? null : <TrainServiceDetails serviceData={serviceData} />
     )
-  }
-
-  function getDepartureTime(){
-    if (cancelled){
-      return (
-        <span>
-          <span data-testid='departureTime' style={{textDecorationLine:"line-through"}}>{scheduledDeparture}</span>
-          <span data-testid='cancelled' style={{color: "red"}}> Cancelled</span>
-        </span>
-      );
-    } else if (scheduledDeparture !== estimatedDeparture && estimatedDeparture !== undefined){
-      return (
-        <span>
-          <span data-testid='departureTime' style={{textDecorationLine:"line-through"}}>{scheduledDeparture}</span>
-          <span data-testid='expectedDeparture' style={{color: "red"}}> {estimatedDeparture.startsWith("-") ? null : estimatedDeparture} (train is late)</span>
-        </span>
-      );
-    } else { 
-      return <span data-testid='departureTime'>{scheduledDeparture}</span>
-    }
-  }
-
-  function getArrivalTime(){
-    if (cancelled){
-      if (nextTrainDeparture !== undefined){
-        if (nextTrainPlatform !== "") {
-          return <span><i>Next train is at {nextTrainDeparture} from platform {nextTrainPlatform}</i></span>;
-        } else {
-          return <span><i>Next train is at {nextTrainDeparture}</i></span>;
-        }
-      }
-    } else {
-      return <span data-testid='arrivalTime'>{arrivalTime}</span>;
-    }
   }
 
   function displayError() {
-    return (
-      <Card className='journey-card journey-late' data-testid='journey-error'>
-        <div className='title-div' data-testid='journeyDetails'>
-          <Card.Title><TrainIcon fontSize='large'/>{props.journeyData.originStation} - {props.journeyData.destinationStation}</Card.Title>
-        </div>
-        <div style={{color: "red"}}>We're having trouble getting train times at the moment.<br/>Sorry :(</div>  
-      </Card>
-    )
+    return <div style={{color: "red"}}>We're having trouble getting train times at the moment.<br/>Sorry :(</div>
   }
 
   return (
     <div className="journey-dashboard-card-div">
-      {errorState ? displayError() :displayJourneyCard()}
+      <Card className="journey-card">
+        <div className='title-div' data-testid='journeyDetails'>
+          <Card.Title><TrainIcon fontSize='large'/>{props.journeyData.originStation} - {props.journeyData.destinationStation}</Card.Title>
+        </div>
+        <div data-testid='departureDetails'>
+          {errorState ? displayError() :displayJourneyCard()}
+        </div>
+      </Card>
     </div>
   )
 }

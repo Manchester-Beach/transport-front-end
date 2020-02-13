@@ -5,67 +5,84 @@ import TrainServiceDetails from './TrainServiceDetails';
 
 
 it('should display the departure and arrival time for a service that is on time', () => {
-  const mockJourneyData = {
+  const mockServiceData = {
     scheduledDepartureTime: "16:00",
     expectedDepartureTime: "16:00",
     arrivalTime: "17:32",
     platform: "1",
     cancelled: false
   }
-  const { getByText, queryByText } = render(<TrainServiceDetails journeyData={mockJourneyData} />)
-  expect(getByText(mockJourneyData.scheduledDepartureTime)).toBeInTheDocument();
-  expect(getByText(mockJourneyData.arrivalTime)).toBeInTheDocument();
-  expect(getByText(mockJourneyData.scheduledDepartureTime)).not.toHaveStyle('text-decoration-line: line-through');
-  expect(getByText("Platform: " + mockJourneyData.platform)).toBeInTheDocument();
-  expect(getByText("Platform: " + mockJourneyData.platform)).toHaveStyle('color: blue');
-  expect(getByText("Platform: " + mockJourneyData.platform)).toHaveStyle('float: right');
+  const { getByText, queryByText } = render(<TrainServiceDetails serviceData={mockServiceData} />)
+  expect(getByText(mockServiceData.scheduledDepartureTime)).toBeInTheDocument();
+  expect(getByText(mockServiceData.arrivalTime)).toBeInTheDocument();
+  expect(getByText(mockServiceData.scheduledDepartureTime)).not.toHaveStyle('text-decoration-line: line-through');
+  expect(getByText("Platform: " + mockServiceData.platform)).toBeInTheDocument();
+  expect(getByText("Platform: " + mockServiceData.platform)).toHaveStyle('color: blue');
+  expect(getByText("Platform: " + mockServiceData.platform)).toHaveStyle('float: right');
   expect(queryByText('Cancelled')).not.toBeInTheDocument();
 });
 
 it('should not show the platform for a service when it is not defined', () => {
-  const mockJourneyData = {
+  const mockServiceData = {
     scheduledDepartureTime: "16:00",
     expectedDepartureTime: "16:00",
     arrivalTime: "17:32",
     platform: "",
     cancelled: false
   }
-  const { getByText, queryByText } = render(<TrainServiceDetails journeyData={mockJourneyData} />)
+  const { getByText, queryByText } = render(<TrainServiceDetails serviceData={mockServiceData} />)
   expect(queryByText("Platform")).not.toBeInTheDocument();
-  expect(getByText(mockJourneyData.scheduledDepartureTime)).toBeInTheDocument();
-  expect(getByText(mockJourneyData.arrivalTime)).toBeInTheDocument();
+  expect(getByText(mockServiceData.scheduledDepartureTime)).toBeInTheDocument();
+  expect(getByText(mockServiceData.arrivalTime)).toBeInTheDocument();
 
 })
 
 it('should display the expected departure time for a service that delayed', () => {
-  const mockJourneyData = {
+  const mockServiceData = {
     scheduledDepartureTime: "16:00",
     expectedDepartureTime: "16:05",
     arrivalTime: "17:32",
     platform: "1",
     cancelled: false
   }
-  const { getByText, queryByText } = render(<TrainServiceDetails journeyData={mockJourneyData} />)
-  expect(getByText(mockJourneyData.scheduledDepartureTime)).toBeInTheDocument();
-  expect(getByText(mockJourneyData.scheduledDepartureTime)).toHaveStyle('text-decoration-line: line-through');
-  expect(getByText(mockJourneyData.expectedDepartureTime)).toBeInTheDocument();
-  expect(getByText(mockJourneyData.expectedDepartureTime)).toHaveStyle('color: red');
-  expect(getByText(mockJourneyData.arrivalTime)).toBeInTheDocument();
+  const { getByText, queryByText } = render(<TrainServiceDetails serviceData={mockServiceData} />)
+  expect(getByText(mockServiceData.scheduledDepartureTime)).toBeInTheDocument();
+  expect(getByText(mockServiceData.scheduledDepartureTime)).toHaveStyle('text-decoration-line: line-through');
+  expect(getByText(mockServiceData.expectedDepartureTime)).toBeInTheDocument();
+  expect(getByText(mockServiceData.expectedDepartureTime)).toHaveStyle('color: red');
+  expect(getByText(mockServiceData.arrivalTime)).toBeInTheDocument();
+  expect(queryByText('Cancelled')).not.toBeInTheDocument();
+});
+
+it('should show a service delayed if the expected departure time is invalid', () => {
+  const mockServiceData = {
+    scheduledDepartureTime: "16:00",
+    expectedDepartureTime: "-1:59",
+    arrivalTime: "17:32",
+    platform: "1",
+    cancelled: false
+  }
+  const { getByText, queryByText } = render(<TrainServiceDetails serviceData={mockServiceData} />)
+  expect(getByText(mockServiceData.scheduledDepartureTime)).toBeInTheDocument();
+  expect(getByText(mockServiceData.scheduledDepartureTime)).toHaveStyle('text-decoration-line: line-through');
+  expect(getByText("Delayed")).toBeInTheDocument();
+  expect(getByText("Delayed")).toHaveStyle('color: red');
+  expect(getByText(mockServiceData.arrivalTime)).toBeInTheDocument();
   expect(queryByText('Cancelled')).not.toBeInTheDocument();
 });
 
 it('should display when a service is cancelled', () => {
-  const mockJourneyData = {
+  const mockServiceData = {
     scheduledDepartureTime: "16:00",
     expectedDepartureTime: "-1:58",
     arrivalTime: "17:32",
     platform: "",
     cancelled: true
   }
-  const { getByText, queryByText } = render(<TrainServiceDetails journeyData={mockJourneyData} />)
-  expect(getByText(mockJourneyData.scheduledDepartureTime)).toBeInTheDocument();
-  expect(getByText(mockJourneyData.scheduledDepartureTime)).toHaveStyle('text-decoration-line: line-through');
+  const { getByText, queryByText } = render(<TrainServiceDetails serviceData={mockServiceData} />)
+  expect(getByText(mockServiceData.scheduledDepartureTime)).toBeInTheDocument();
+  expect(getByText(mockServiceData.scheduledDepartureTime)).toHaveStyle('text-decoration-line: line-through');
   expect(getByText("Cancelled")).toBeInTheDocument();
   expect(getByText("Cancelled")).toHaveStyle('color: red');
-  expect(queryByText(mockJourneyData.arrivalTime)).not.toBeInTheDocument();
+  expect(queryByText(mockServiceData.arrivalTime)).not.toBeInTheDocument();
 });

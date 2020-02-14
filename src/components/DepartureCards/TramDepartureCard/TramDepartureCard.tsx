@@ -6,7 +6,9 @@ import TramAPIService from '../../../utils/TramAPIService';
 import TramIcon from '@material-ui/icons/Tram';
 
 interface TramDepartureProps {
-	stationID: string;
+	identifier: string;
+	name: string;
+	timeOffset: number;
 }
 
 const TramDepartureCard: React.FC<TramDepartureProps> = (props) => {
@@ -35,7 +37,7 @@ const TramDepartureCard: React.FC<TramDepartureProps> = (props) => {
 
 	async function getDepartures() {
 		let tramService = new TramAPIService();
-		let tramDeparturesResponse = await tramService.getDeparturesRequest(props.stationID);
+		let tramDeparturesResponse = await tramService.getDeparturesRequest(props.identifier, props.timeOffset);
 		if (tramDeparturesResponse.status !== 200) {
 			setErrorMessage("We're having trouble getting tram times at the moment. Sorry :(");
 		}
@@ -58,7 +60,7 @@ const TramDepartureCard: React.FC<TramDepartureProps> = (props) => {
 	return(
 		<div className="tram-card-div">
 			<Card className="tram-card" data-testid='tram-card'>
-				<div className="tram-header"><TramIcon fontSize="large"></TramIcon>Shudehill</div>
+				<div className="tram-header"><TramIcon fontSize="large"></TramIcon>{props.name}</div>
 				<div>{formatDepartures()}</div>
 			</Card>
 		</div>

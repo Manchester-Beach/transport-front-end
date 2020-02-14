@@ -5,8 +5,8 @@ class TramAPIService {
   constructor() {
     this.baseUrl = Config.getApiURL();
   }
-  async getDeparturesRequest(stationID: string) {
-	return await fetch(this.baseUrl + "departures/tram/" + stationID);
+  async getDeparturesRequest(identifier: string, timeOffset: number) {
+	return await fetch(this.baseUrl + "departures/tram/" + identifier);
   }
 }
 export default TramAPIService;

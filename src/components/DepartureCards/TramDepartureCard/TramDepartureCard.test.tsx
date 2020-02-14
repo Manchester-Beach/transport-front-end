@@ -8,7 +8,7 @@ it('should display an error when an error is returned from the API', async () =>
 	jest.spyOn(global, 'fetch').mockImplementation(() => {
 	  return new Response("Error", {status: 500})
 	})
-	const { getByText } = render(<TramDepartureCard stationID="9400ZZMASHU"/>)
+	const { getByText } = render(<TramDepartureCard identifier="9400ZZMASHU"/>)
 	await wait(() => expect(getByText("We're having trouble getting tram times at the moment. Sorry :(")).toBeInTheDocument());
   });
 
@@ -30,7 +30,7 @@ it('should display an error when an error is returned from the API', async () =>
 	jest.spyOn(global, 'fetch').mockImplementation(() => {
 		return new Response(JSON.stringify(mockResponseBody), {status: 200});
 	})
-	const { getByText } = render(<TramDepartureCard stationID="9400ZZMASHU"/>)
+	const { getByText } = render(<TramDepartureCard identifier="9400ZZMASHU"/>)
 	await wait(() => { 
 		expect(getByText("Piccadilly")).toBeInTheDocument();
 		expect(getByText("5 Mins")).toBeInTheDocument();

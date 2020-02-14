@@ -46,7 +46,7 @@ type AdminTrainListProps = {
       }
 
       setJourneys(journeyArray);
-      setTimeout(fetchData, 5000)
+      // setTimeout(fetchData, 5000)
     }
 
     async function deleteJourney(index: number){

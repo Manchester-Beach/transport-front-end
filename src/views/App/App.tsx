@@ -21,7 +21,7 @@ const App: React.FC = () => {
       </header>
       <div id="main">
         <JourneyForm refreshPage={refreshCards} />
-        <AdminTrainList apiService={new ApiService()} />
+        <AdminTrainList apiService={new ApiService()}/>
         {/* <JourneyCardList refreshCards={refreshCards} journeys={journeys} key={date} onDashboard={false}/> */}
       </div>
     </div>

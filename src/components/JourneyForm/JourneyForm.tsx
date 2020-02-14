@@ -75,7 +75,10 @@ class JourneyForm extends Component<FormProps, FormState> {
       let originCrs = this.state.fromStation.crs;
       let destinationCrs = this.state.toStation.crs;
 
-      this.apiService.postJourney(originCrs, destinationCrs).then(() => this.props.refreshPage());
+      this.apiService.postJourney(originCrs, destinationCrs).then(() => {
+        this.props.refreshPage();
+        window.location.reload(false);
+      });
     }
   };
 

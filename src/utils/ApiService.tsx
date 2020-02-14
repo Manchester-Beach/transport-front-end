@@ -21,7 +21,7 @@ class ApiService implements IJourneyService {
   }
 
   async postJourney(originCrs: string, destinationCrs: string) {
-    let response = await fetch(this.baseUrl + "journeys", {
+    await fetch(this.baseUrl + "journeys", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

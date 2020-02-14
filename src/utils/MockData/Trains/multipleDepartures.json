@@ -1,72 +1,40 @@
 {
   "departures": [
     {
-      "id": "qQTg9wJxsNk+EBkkpRMxDA==",
-      "origin": {
-        "crs": "MCV",
-        "name": "Manchester Victoria",
-        "scheduled": "09:30",
-        "estimated": "09:38"
-      },
-      "destination": {
-        "crs": "LDS",
-        "name": "Leeds",
-        "scheduled": "10:21",
-        "estimated": "10:21"
-      },
-      "isCancelled": false,
-      "platform": "4"
+      originStation: {name: "Manchester Victoria", lat: 0, lon: 0, crs: "MCV"},
+      destinationStation: {name: "Leeds", lat: 0, lon: 0, crs: "LDS"},
+      platform: "4",
+      scheduledDeparture: "09:30",
+      expectedDeparture: "09:30",
+      arrivalTime: "10:21",
+      cancelled: false
     },
     {
-      "id": "qNxQJeCuh5vDZmRCK9P6ng==",
-      "origin": {
-        "crs": "MCV",
-        "name": "Manchester Victoria",
-        "scheduled": "09:45",
-        "estimated": "09:45"
-      },
-      "destination": {
-        "crs": "LDS",
-        "name": "Leeds",
-        "scheduled": "10:40",
-        "estimated": "10:40"
-      },
-      "isCancelled": false,
-      "platform": "4"
+      originStation: {name: "Manchester Victoria", lat: 0, lon: 0, crs: "MCV"},
+      destinationStation: {name: "Leeds", lat: 0, lon: 0, crs: "LDS"},
+      platform: "6",
+      scheduledDeparture: "09:45",
+      expectedDeparture: "09:45",
+      arrivalTime: "10:40",
+      cancelled: false
     },
     {
-      "id": "wrqU7wIrINddcA1cIn8oLg==",
-      "origin": {
-        "crs": "MCV",
-        "name": "Manchester Victoria",
-        "scheduled": "09:56",
-        "estimated": "09:56"
-      },
-      "destination": {
-        "crs": "LDS",
-        "name": "Leeds",
-        "scheduled": "11:13",
-        "estimated": "11:13"
-      },
-      "isCancelled": false,
-      "platform": "1"
+      originStation: {name: "Manchester Victoria", lat: 0, lon: 0, crs: "MCV"},
+      destinationStation: {name: "Leeds", lat: 0, lon: 0, crs: "LDS"},
+      platform: "4",
+      scheduledDeparture: "09:56",
+      expectedDeparture: "09:56",
+      arrivalTime: "11:13",
+      cancelled: false
     },
     {
-      "id": "xk/vLinmeYACpjrHvUIWBA==",
-      "origin": {
-        "crs": "MCV",
-        "name": "Manchester Victoria",
-        "scheduled": "10:00",
-        "estimated": "10:00"
-      },
-      "destination": {
-        "crs": "LDS",
-        "name": "Leeds",
-        "scheduled": "10:49",
-        "estimated": "10:49"
-      },
-      "isCancelled": false,
-      "platform": "4"
+      originStation: {name: "Manchester Victoria", lat: 0, lon: 0, crs: "MCV"},
+      destinationStation: {name: "Leeds", lat: 0, lon: 0, crs: "LDS"},
+      platform: "4",
+      scheduledDeparture: "10:00",
+      expectedDeparture: "10:00",
+      arrivalTime: "10:49",
+      cancelled: false
     }
   ]
 }

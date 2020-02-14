@@ -67,7 +67,7 @@ it('should display a different journey when returned from the API', async () => 
   expect(getByText(mockResponseBody.arrivalTime)).toBeInTheDocument();
 });
 
-it('should display multiple journeys when they are returned', async () => {
+it.only('should display multiple journeys when they are returned', async () => {
   const mockJourney = new JourneyType("MCV", "LDS", "Manchester Victoria", "Leeds");
   const mockResponseBody = require('../../utils/MockData/Trains/multipleDepartures.json');
   spy.mockImplementation(() => {

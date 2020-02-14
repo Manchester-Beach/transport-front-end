@@ -44,7 +44,7 @@ class ApiService implements IJourneyService {
   }
 
   async getJourneyRequest(originCrs?: String, destinationCrs? : String, journeyNumber = 0): Promise<Response> {
-    return await fetch(this.baseUrl + "scheduledJourneys/" + originCrs + "/" + destinationCrs + "/" + journeyNumber);
+    return await fetch(this.baseUrl + "scheduledJourneys/" + originCrs + "/" + destinationCrs + "/");
   }
 
   generateFutureJourneyFetchRequest(index: Number, originCrs?: String, destinationCrs? : String) : string{

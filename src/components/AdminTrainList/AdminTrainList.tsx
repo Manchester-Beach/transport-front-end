@@ -52,7 +52,6 @@ type AdminTrainListProps = {
     async function deleteJourney(index: number){
       await fetch(apiService.generateJourneyDeleteRequest(index), {method: 'delete'});
       fetchData();
-      console.log("Removed journey " + index)
     }
 
     return <div className="journey-admin-list">{displayJourneyCards()}</div>;

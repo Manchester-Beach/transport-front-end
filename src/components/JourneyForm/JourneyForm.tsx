@@ -101,7 +101,7 @@ class JourneyForm extends Component<FormProps, FormState> {
                 />
               </Col>
               <Col xs="2" md="2" lg="2">
-                <Button onClick={this.addJourney}>Add</Button>
+                <Button onClick={this.addJourney} id="addButton" data-testid="addButton">Add</Button>
               </Col>
             </Row>
           </Form>

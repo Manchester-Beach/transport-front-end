@@ -29,8 +29,6 @@ class ApiService implements IJourneyService {
         destination: destinationCrs
       })
     });
-
-    console.log("Response", response.status);
   }
 
   async getAllJourneys(): Promise<Response> {

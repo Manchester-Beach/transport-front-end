@@ -1,15 +1,9 @@
 import React from 'react';
-import TrainCard from "./TrainCard";
 import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
+import {ServiceDataType} from "../../utils/Types";
 
 type TrainServiceDetailsProps = {
-  serviceData: {
-    scheduledDepartureTime: string;
-    expectedDepartureTime: string;
-    arrivalTime: string;
-    platform: string;
-    cancelled: boolean;
-  };
+  serviceData:  ServiceDataType;
 }
 
 const TrainServiceDetails: React.FC <TrainServiceDetailsProps> = (props) =>{

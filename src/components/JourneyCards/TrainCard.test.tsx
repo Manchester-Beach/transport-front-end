@@ -67,66 +67,16 @@ it('should display a different journey when returned from the API', async () => 
   expect(getByText(mockResponseBody.arrivalTime)).toBeInTheDocument();
 });
 
-it('should show when a train is delayed', async () => {
+it('should display multiple journeys when they are returned', async () => {
   const mockJourney = new JourneyType("MCV", "LDS", "Manchester Victoria", "Leeds");
-
-  const mockResponseBody = {
-    originStation: {name: "Manchester Victoria", lat: 0, lon: 0, crs: "MCV"},
-    destinationStation: {name: "Leeds", lat: 0, lon: 0, crs: "LDS"},
-    platform: "4",
-    scheduledDeparture: "18:30",
-    expectedDeparture: "18:35",
-    arrivalTime: "19:21",
-    cancelled: false
-  }
-  spy.mockImplementation(() => {
-    return new Response(JSON.stringify(mockResponseBody), {status: 200});
-  })
-  const {container, getByText} = render(<TrainCard apiService={new ApiService()} journeyData={mockJourney}/>);
-  await wait(() => {});
-  expect(getByText(mockResponseBody.scheduledDeparture)).toHaveStyle('text-decoration-line: line-through');
-  expect(getByText(mockResponseBody.expectedDeparture)).toHaveStyle('color: red')
-});
-
-it('should not display an invalid expected departure time', async () => {
-  const mockJourney = new JourneyType("MCV", "LDS", "Manchester Victoria", "Leeds");
-
-  const mockResponseBody = {
-    originStation: {name: "Manchester Victoria", lat: 0, lon: 0, crs: "MCV"},
-    destinationStation: {name: "Leeds", lat: 0, lon: 0, crs: "LDS"},
-    platform: "4",
-    scheduledDeparture: "18:30",
-    expectedDeparture: "-1:59",
-    arrivalTime: "19:21",
-    cancelled: false
-  }
+  const mockResponseBody = require('../../utils/MockData/Trains/multipleDepartures.json');
   spy.mockImplementation(() => {
     return new Response(JSON.stringify(mockResponseBody), {status: 200});
   });
-  const {queryByText, getByText} = render(<TrainCard apiService={new ApiService()} journeyData={mockJourney}/>);
+  const {getByText} = render(<TrainCard apiService={new ApiService()} journeyData={mockJourney}/>);
   await wait(() => {});
-  expect(getByText(mockResponseBody.scheduledDeparture)).toHaveStyle('text-decoration-line: line-through');
-  expect(getByText("Delayed")).toHaveStyle('color: red');
-  expect(queryByText(/-1:59/)).not.toBeInTheDocument();
-});
-
-it('should show when a train is cancelled', async () => {
-  const mockJourney = new JourneyType("MCV", "LDS", "Manchester Victoria", "Leeds");
-
-  const mockCancelledResponseBody = {
-    originStation: {name: "Manchester Victoria", lat: 0, lon: 0, crs: "MCV"},
-    destinationStation: {name: "Leeds", lat: 0, lon: 0, crs: "LDS"},
-    platform: "",
-    scheduledDeparture: "18:45",
-    expectedDeparture: "-1:58",
-    arrivalTime: "19:40",
-    cancelled: true
-  }
-  spy.mockImplementation(() => {
-    return new Response(JSON.stringify(mockCancelledResponseBody), {status: 200});
-  });
-  const {getByText, queryByText} = render(<TrainCard apiService={new ApiService()} journeyData={mockJourney}/>);
-  await wait(() => {});
-  expect(getByText("Cancelled")).toHaveStyle('color: red');
-  expect(queryByText(mockCancelledResponseBody.arrivalTime)).not.toBeInTheDocument();
+  expect(getByText('09:30')).toBeInTheDocument();
+  expect(getByText('09:45')).toBeInTheDocument();
+  expect(getByText('09:56')).toBeInTheDocument();
+  expect(getByText('10:00')).toBeInTheDocument();
 });

@@ -32,3 +32,18 @@ export type JourneyCardProps = {
   journeyData : JourneyType,
   parentCallback: () => void
 }
+
+export class ServiceDataType {
+  constructor(scheduledDepartureTime: string, expectedDepartureTime: string, arrivalTime: string, platform: string, cancelled: boolean){
+    this.scheduledDepartureTime = scheduledDepartureTime;
+    this.expectedDepartureTime = expectedDepartureTime;
+    this.arrivalTime = arrivalTime;
+    this.platform = platform;
+    this.cancelled = cancelled;
+  }
+  scheduledDepartureTime: string;
+  expectedDepartureTime: string;
+  arrivalTime: string;
+  platform: string;
+  cancelled: boolean;
+}

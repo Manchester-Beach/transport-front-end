@@ -2,7 +2,7 @@ import { Station } from "./Types";
 import Config from "../Config/config";
 
 export interface IJourneyService {
-  getJourneyRequest(originCrs: string, destinationCrs: string, journeyNumber: number): Promise<Response>;
+  getJourneyRequest(originCrs: string, destinationCrs: string): Promise<Response>;
 }
 
 class ApiService implements IJourneyService {
@@ -43,7 +43,7 @@ class ApiService implements IJourneyService {
     return this.baseUrl + "scheduledJourneys/" + originCrs + "/" + destinationCrs + "/0";
   }
 
-  async getJourneyRequest(originCrs?: String, destinationCrs? : String, journeyNumber = 0): Promise<Response> {
+  async getJourneyRequest(originCrs?: String, destinationCrs? : String): Promise<Response> {
     return await fetch(this.baseUrl + "scheduledJourneys/" + originCrs + "/" + destinationCrs + "/");
   }
 

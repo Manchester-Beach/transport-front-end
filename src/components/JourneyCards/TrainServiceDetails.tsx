@@ -44,7 +44,6 @@ const TrainServiceDetails: React.FC <TrainServiceDetailsProps> = (props) =>{
 
     return (
       <div data-testid='serviceDetails'>
-        { console.log('rendering a service', props)}
         { getDepartureTime() }
         { getArrivalTime() }
       </div>

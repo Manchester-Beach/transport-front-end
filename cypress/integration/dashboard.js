@@ -22,6 +22,7 @@ it('displays a train journey', () => {
   cy.get('.journey-dashboard-card-div').should('be.visible')
   cy.contains('Manchester Piccadilly - London Euston', { timeout: 10000 })
   cy.get('[data-testid="departureDetails"]').should('be.visible')
+  cy.get('[data-testid="serviceDetails"]').should('have.length', 3, { timeout: 10000 })
 })
 
 it('displays a tram journey', () => {

@@ -16,18 +16,16 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
   const [services, setServices] = useState();
 
   async function updateInfo() {
-    let response = await props.apiService.getJourneyRequest(props.journeyData.originCrs, props.journeyData.destinationCrs, 0);
+    let response = await props.apiService.getJourneyRequest(props.journeyData.originCrs, props.journeyData.destinationCrs);
     if (response.status === 200) {
       const data = await response.json();
-      console.log("data", data)
       setErrorState(false);
       if (data !== undefined) {
         let servicesFromAPI: ServiceDataType[] = [];
-        data.forEach((departure: any) => {
-          console.log('departure')
-          let serviceDataFromAPI = new ServiceDataType(departure["scheduledDeparture"], departure["expectedDeparture"], departure["arrivalTime"], departure["platform"], departure["cancelled"])
+        for(let x = 0; x < data.length && x < 3; x++) {
+          let serviceDataFromAPI = new ServiceDataType(data[x].scheduledDeparture, data[x].expectedDeparture, data[x].arrivalTime, data[x].platform, data[x].cancelled)
           servicesFromAPI.push(serviceDataFromAPI);
-        })
+        }
         setServices(servicesFromAPI);
       } else {
          setServiceData ({

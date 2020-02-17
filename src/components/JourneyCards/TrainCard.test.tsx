@@ -23,60 +23,33 @@ it('should display an error when an error is returned from the API', async () =>
   expect(getByText(/We're having trouble getting train times at the moment/)).toHaveStyle('color: red');
 });
 
-it('should display a journey when returned from the API', async () => {
+it('should display the full journey details when returned from the API', async () => {
   const mockJourney = new JourneyType("MCV", "LDS", "Manchester Victoria", "Leeds");
-
-  const mockResponseBody = {
-    originStation: {name: "Manchester Victoria", lat: 0, lon: 0, crs: "MCV"},
-    destinationStation: {name: "Leeds", lat: 0, lon: 0, crs: "LDS"},
-    platform: "4",
-    scheduledDeparture: "16:45",
-    expectedDeparture: "16:45",
-    arrivalTime: "17:40",
-    cancelled: false
-  }
+  const mockResponseBody = require('../../utils/MockData/Trains/multipleDepartures.json');
   spy.mockImplementation(() => {
     return new Response(JSON.stringify(mockResponseBody), {status: 200});
   })
-  const {container, getByText} = render(<TrainCard apiService={new ApiService()} journeyData={mockJourney}/>);
+  const {container, getByText, getAllByText} = render(<TrainCard apiService={new ApiService()} journeyData={mockJourney}/>);
   await wait(() => {});
-  expect(getByText(mockResponseBody.originStation.name + " - " + mockResponseBody.destinationStation.name)).toBeInTheDocument();
+  expect(getByText(mockResponseBody[0].originStation.name + " - " + mockResponseBody[0].destinationStation.name)).toBeInTheDocument();
   expect(container.querySelector('.card-title>svg')).toBeInTheDocument();
-  expect(getByText(mockResponseBody.scheduledDeparture)).toBeInTheDocument();
-  expect(getByText(mockResponseBody.scheduledDeparture)).not.toHaveStyle('text-decoration-line: line-through');
-  expect(getByText(mockResponseBody.arrivalTime)).toBeInTheDocument();
-  expect(getByText("Platform: " + mockResponseBody.platform)).toBeInTheDocument();
+  expect(getByText(mockResponseBody[0].scheduledDeparture)).toBeInTheDocument();
+  expect(getByText(mockResponseBody[0].scheduledDeparture)).not.toHaveStyle('text-decoration-line: line-through');
+  expect(getByText(mockResponseBody[0].arrivalTime)).toBeInTheDocument();
+  expect(getAllByText("Platform: " + mockResponseBody[0].platform).length).toBeGreaterThan(0);
 });
 
-it('should display a different journey when returned from the API', async () => {
-  const mockJourney = new JourneyType("MAN", "EUS", "Manchester Piccadilly", "London Euston");
-
-  const mockResponseBody = {
-    originStation: {name: "Manchester Piccadilly", lat: 0, lon: 0, crs: "MAN"},
-    destinationStation: {name: "London Euston", lat: 0, lon: 0, crs: "EUS"},
-    scheduledDeparture: "16:20",
-    arrivalTime: "18:22"
-  }
-  spy.mockImplementation(() => {
-    return new Response(JSON.stringify(mockResponseBody), {status: 200});
-  })
-  const {getByText} = render(<TrainCard apiService={new ApiService()} journeyData={mockJourney}/>);
-  await wait(() => {});
-  expect(getByText(mockResponseBody.originStation.name + " - " + mockResponseBody.destinationStation.name)).toBeInTheDocument();
-  expect(getByText(mockResponseBody.scheduledDeparture)).toBeInTheDocument();
-  expect(getByText(mockResponseBody.arrivalTime)).toBeInTheDocument();
-});
-
-it.only('should display multiple journeys when they are returned', async () => {
+it('should display multiple journeys when they are returned', async () => {
   const mockJourney = new JourneyType("MCV", "LDS", "Manchester Victoria", "Leeds");
   const mockResponseBody = require('../../utils/MockData/Trains/multipleDepartures.json');
   spy.mockImplementation(() => {
     return new Response(JSON.stringify(mockResponseBody), {status: 200});
   });
-  const {getByText} = render(<TrainCard apiService={new ApiService()} journeyData={mockJourney}/>);
+  const {getAllByTestId, getByText, queryByText} = render(<TrainCard apiService={new ApiService()} journeyData={mockJourney}/>);
   await wait(() => {});
-  expect(getByText('09:30')).toBeInTheDocument();
-  expect(getByText('09:45')).toBeInTheDocument();
-  expect(getByText('09:56')).toBeInTheDocument();
-  expect(getByText('10:00')).toBeInTheDocument();
+  expect(getAllByTestId('serviceDetails').length).toBe(3);
+  expect(getByText('10:15')).toBeInTheDocument();
+  expect(getByText('10:20')).toBeInTheDocument();
+  expect(getByText('10:30')).toBeInTheDocument();
+  expect(queryByText('10:37')).not.toBeInTheDocument();
 });

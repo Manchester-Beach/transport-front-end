@@ -19,7 +19,7 @@ describe("Admin Panel", () => {
 		index++;
 		cy.visit("/admin");
 		cy.get('.station-names').contains('Manchester Victoria -  Leeds');
-		cy.get('.delete-button').click();
+		cy.get('.delete-button').last().click();
 		index --;
 		cy.visit('/admin');
 		cy.get('.station-names').should('not.exist');

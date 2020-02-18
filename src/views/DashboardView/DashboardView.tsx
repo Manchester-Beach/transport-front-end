@@ -19,7 +19,7 @@ const DashboardView : React.FC = () => {
         <Clock />
         <JourneyCardList refreshCards={refreshCards} journeys={journeys} key={date} onDashboard={true}/>
         <div className="tram-card-list">
-          {/* <TramDepartureCard identifier="9400ZZMAEXS" name="Exchange Square" timeOffset={5} /> */}
+          <TramDepartureCard identifier="9400ZZMAEXS" name="Exchange Square" timeOffset={5} />
           <TramDepartureCard identifier="9400ZZMASHU" name="Shudehill" timeOffset={5} />
           <TramDepartureCard identifier="9400ZZMAVIC" name="Victoria" timeOffset={5} />
         </div>

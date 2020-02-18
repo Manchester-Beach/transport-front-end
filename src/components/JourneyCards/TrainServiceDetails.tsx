@@ -29,14 +29,29 @@ const TrainServiceDetails: React.FC <TrainServiceDetailsProps> = (props) =>{
     }
 
     function getArrivalTime() {
-      if (! props.serviceData.cancelled) {
+      if (props.serviceData.cancelled) {
+        return null;
+      } else if (props.serviceData.expectedArrivalTime !== undefined && props.serviceData.expectedArrivalTime !== props.serviceData.scheduledArrivalTime) {
         return (
           <span>
             <ArrowRightAltIcon fontSize="inherit"></ArrowRightAltIcon>
-            <span>{props.serviceData.arrivalTime}</span>
-            {props.serviceData.platform === "" ? null : <span style={{color: "blue", float: "right"}}>Platform: {props.serviceData.platform}</span>}
+            <span style={{textDecorationLine:"line-through"}}>{props.serviceData.scheduledArrivalTime}</span>
+            <span style={{color:"red"}}> {props.serviceData.expectedArrivalTime.startsWith('-') ? "Delayed" : props.serviceData.expectedArrivalTime}</span>
           </span>
         )
+      } else {
+        return (
+          <span>
+            <ArrowRightAltIcon fontSize="inherit"></ArrowRightAltIcon>
+            <span>{props.serviceData.expectedArrivalTime}</span>
+          </span>
+        )
+      }
+    }
+
+    function getPlatform() {
+      if (props.serviceData.platform !== null && !props.serviceData.cancelled) {
+        return <span style={{color: "blue", float: "right"}}>Platform: {props.serviceData.platform}</span>;
       } else {
         return null;
       }
@@ -46,6 +61,7 @@ const TrainServiceDetails: React.FC <TrainServiceDetailsProps> = (props) =>{
       <div data-testid='serviceDetails'>
         { getDepartureTime() }
         { getArrivalTime() }
+        { getPlatform() }
       </div>
     )
 }

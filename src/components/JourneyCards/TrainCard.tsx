@@ -23,7 +23,7 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
       if (data !== undefined) {
         let servicesFromAPI: ServiceDataType[] = [];
         for(let x = 0; x < data.length && x < 3; x++) {
-          let serviceDataFromAPI = new ServiceDataType(data[x].scheduledDeparture, data[x].expectedDeparture, data[x].arrivalTime, data[x].platform, data[x].cancelled)
+          let serviceDataFromAPI = new ServiceDataType(data[x].scheduledDeparture, data[x].expectedDeparture, data[x].arrivalTime, data[x].expectedArrivalTime, data[x].platform, data[x].cancelled)
           servicesFromAPI.push(serviceDataFromAPI);
         }
         setServices(servicesFromAPI);

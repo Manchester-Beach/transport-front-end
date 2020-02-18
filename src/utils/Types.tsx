@@ -34,16 +34,18 @@ export type JourneyCardProps = {
 }
 
 export class ServiceDataType {
-  constructor(scheduledDepartureTime: string, expectedDepartureTime: string, arrivalTime: string, platform: string, cancelled: boolean){
+  constructor(scheduledDepartureTime: string, expectedDepartureTime: string, scheduledArrivalTime: string, expectedArrivalTime: string,  platform: string, cancelled: boolean){
     this.scheduledDepartureTime = scheduledDepartureTime;
     this.expectedDepartureTime = expectedDepartureTime;
-    this.arrivalTime = arrivalTime;
+    this.scheduledArrivalTime = scheduledArrivalTime;
+    this.expectedArrivalTime = expectedArrivalTime;
     this.platform = platform;
     this.cancelled = cancelled;
   }
   scheduledDepartureTime: string;
   expectedDepartureTime: string;
-  arrivalTime: string;
+  scheduledArrivalTime: string;
+  expectedArrivalTime: string;
   platform: string;
   cancelled: boolean;
 }

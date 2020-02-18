@@ -16,6 +16,7 @@
     "scheduledDeparture": "10:15",
     "expectedDeparture": "10:15",
     "arrivalTime": "11:10",
+    "expectedArrivalTime": "11:10",
     "cancelled": false
   },
   {
@@ -35,6 +36,7 @@
     "scheduledDeparture": "10:20",
     "expectedDeparture": "10:20",
     "arrivalTime": "11:42",
+    "expectedArrivalTime": "11:42",
     "cancelled": false
   },
   {
@@ -54,6 +56,7 @@
     "scheduledDeparture": "10:30",
     "expectedDeparture": "10:30",
     "arrivalTime": "11:21",
+    "expectedArrivalTime": "11:21",
     "cancelled": false
   },
   {
@@ -73,6 +76,7 @@
     "scheduledDeparture": "10:37",
     "expectedDeparture": "10:37",
     "arrivalTime": "12:03",
+    "expectedArrivalTime": "12:03",
     "cancelled": false
   }
 ]

@@ -39,7 +39,7 @@ const TrainCard: React.FC<TrainCardProps> = (props) => {
     } else {
       setErrorState(true);
     }
-    setTimeout(updateInfo, 10000);
+    setTimeout(updateInfo, 60000);
   }
 
   useEffect(() => {

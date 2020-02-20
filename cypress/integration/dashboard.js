@@ -1,6 +1,7 @@
+let baseUrl = "https://beach-train-backend-qa.herokuapp.com";
 let noOfJourneyDisplayed = 0;
 before(function() {
-  cy.request('POST', 'https://beach-train-backend-qa.herokuapp.com/journeys', {origin: "MAN", destination: "EUS"})
+  cy.request('POST', baseUrl + '/journeys', {origin: "MAN", destination: "EUS"})
   cy.visit('/dashboard')
   cy.get('.journey-dashboard-card-div').each(function(journey){
     noOfJourneyDisplayed++;
@@ -8,7 +9,7 @@ before(function() {
 })
 
 after(function() {
-  cy.request('DELETE', 'https://beach-train-backend-qa.herokuapp.com/journeys/'+(noOfJourneyDisplayed-1))
+  cy.request('DELETE', baseUrl + '/journeys/'+(noOfJourneyDisplayed-1))
   console.log("noOfJourneyDisplayed", noOfJourneyDisplayed)
 })
 

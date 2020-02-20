@@ -10,6 +10,7 @@ class Config {
                 return "https://beach-train-backend-qa.herokuapp.com/";
             case "development":
                 return "https://beach-train-backend-qa.herokuapp.com/";
+                // return "http://localhost:8080/";
             default:
                 return "https://beach-train-backend-qa.herokuapp.com/";
         }
